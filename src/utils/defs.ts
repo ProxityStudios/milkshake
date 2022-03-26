@@ -4,18 +4,44 @@ import DiscordBot from "@/DiscordBot";
 import { CacheManager, Deps } from "./";
 import { GuildEntity } from "./typeorm/entities/GuildEntity";
 import { UserEntity } from "./typeorm/entities/UserEntity";
-import { DatabaseManager } from "./managers";
+import { DatabaseManager, SlashCreatorManager } from "./managers";
+import {
+  SlashCommand as CreatorSlashCommand,
+  SlashCommandOptions as CreatorSlashCommandOptions,
+  SlashCreator
+} from "slash-create";
 
 export enum Command {
   PING = "ping",
   HELP = "help",
-  BOT_INFORMATION = "bot-info"
+  BOT_INFORMATION = "bot-info",
+  COMPANY = "company"
+}
+
+export enum SlashCommandK {
+  HELP = "help",
+  PING = "ping"
+}
+
+export enum HelpSlashCommandComponent {
+  CustomID = "selectMenu"
+}
+
+export enum SlashCommandCategory {
+  CORE = "Core",
+  STAFF = "Staff"
 }
 
 export interface CommandOptions {
-  name: keyof typeof Command;
   enabled: boolean;
+  name: Command;
+  category: CommandCategory;
   onlyStaff?: boolean;
+}
+
+export enum CommandCategory {
+  CORE = "Core",
+  STAFF = "Staff"
 }
 
 export interface EventOptions {
@@ -28,6 +54,7 @@ export type Managers = {
 
   cacheManager?: CacheManager;
   databaseManager?: DatabaseManager;
+  slashCommandManager?: SlashCreatorManager;
 };
 
 export type ClientCache = {
@@ -49,6 +76,23 @@ export type Repositories = {
   guilds: Repository<GuildEntity>;
   users: Repository<UserEntity>;
 };
+
+export interface SlashCommandOptions {
+  category: SlashCommandCategory;
+}
+
+export abstract class SlashCommand extends CreatorSlashCommand {
+  constructor(
+    creator: SlashCreator,
+    options: CreatorSlashCommandOptions & SlashCommandOptions
+  ) {
+    super(creator, options);
+  }
+
+  get client(): DiscordBot {
+    return this.creator.client;
+  }
+}
 
 export abstract class BaseManager {
   constructor(
@@ -73,8 +117,8 @@ export abstract class BaseCommand {
 
   abstract handle(ctx: CommandContext, msg: Message, ...args: any): any;
 
-  get name(): Command {
-    return Command[this.options.name];
+  get name(): CommandOptions["name"] {
+    return this.options.name;
   }
 }
 

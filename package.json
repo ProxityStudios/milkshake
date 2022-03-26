@@ -23,6 +23,7 @@
     "module-alias": "^2.2.2",
     "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
+    "slash-create": "^5.3.0",
     "typeorm": "^0.2.41"
   }
 }

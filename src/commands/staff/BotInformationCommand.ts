@@ -1,11 +1,12 @@
-import { BaseCommand, CommandContext } from "@/utils";
+import { BaseCommand, Command, CommandCategory, CommandContext } from "@/utils";
 import { Message, MessageEmbed, MessageEmbedOptions } from "discord.js";
 
 class BotInformationCommand extends BaseCommand {
   constructor() {
     super({
-      name: "BOT_INFORMATION",
       enabled: true,
+      name: Command.BOT_INFORMATION,
+      category: CommandCategory.STAFF,
       onlyStaff: true
     });
   }

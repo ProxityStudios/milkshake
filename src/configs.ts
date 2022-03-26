@@ -1,12 +1,18 @@
 import { ConnectionOptions } from "typeorm";
 import { entities } from "@/utils/typeorm";
+import { SlashCreatorOptions } from "slash-create";
 
 const Configs = {
   Client: {
     Version: "0.8.7",
     Managers: {
+      Enabled: {},
       CacheManager: {},
-      DatabaseManager: {}
+      DatabaseManager: {},
+      SlashCreatorManager: {
+        publicKey: process.env.DISCORD_APP_PUBLIC_KEY,
+        token: process.env.DISCORD_APP_TOKEN
+      } as SlashCreatorOptions
     },
     OwnerIDs: ["748366237788012695"],
     Colors: {

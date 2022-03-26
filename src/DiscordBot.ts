@@ -5,13 +5,15 @@ import {
   registerEvents,
   CacheManager,
   Deps,
-  DatabaseManager
+  DatabaseManager,
+  SlashCreatorManager
 } from "@/utils";
 import Configs from "@/configs";
 import { ClientFiles, Managers, Repositories } from "./utils/defs";
 import { getRepository } from "typeorm";
 import { GuildEntity } from "./utils/typeorm/entities/GuildEntity";
 import { UserEntity } from "./utils/typeorm/entities/UserEntity";
+import { SlashCreator } from "slash-create";
 
 class DiscordBot extends Client {
   readonly configs = Configs;
@@ -69,12 +71,24 @@ class DiscordBot extends Client {
   private async initManagers(): Promise<void> {
     this.managers = {
       cacheManager: Deps.add(CacheManager, new CacheManager(this)),
-      databaseManager: Deps.add(DatabaseManager, new DatabaseManager(this))
+      databaseManager: Deps.add(DatabaseManager, new DatabaseManager(this)),
+      slashCommandManager: Deps.add(
+        SlashCreatorManager,
+        new SlashCreatorManager(
+          this,
+          new SlashCreator({
+            client: this,
+            ...this.configs.Client.Managers.SlashCreatorManager,
+            applicationID: this.user?.id!
+          })
+        )
+      )
     };
 
     this.cacheManager = this.managers.cacheManager;
     await this.managers.cacheManager?.init();
     await this.managers.databaseManager?.init();
+    await this.managers.slashCommandManager?.init();
   }
 }
 

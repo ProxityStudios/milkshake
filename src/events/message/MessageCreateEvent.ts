@@ -16,15 +16,6 @@ class MessageCreateEvent extends BaseEvent {
     let user = this.client.managers.cacheManager?.users.get(msg.author.id);
     let guild = this.client.managers.cacheManager?.guilds.get(msg.guild.id);
 
-    if (!user) {
-      const userLoadingMsg = await msg.reply(
-        "Hey! This looks like your first command. We configure a few settings about you!"
-      );
-
-      user = await this.client.managers.databaseManager?.createUser(msg.author);
-      await userLoadingMsg.edit("Done!");
-    }
-
     if (!guild) {
       const guildLoadingMsg = await msg.reply(
         "Hey! This looks like a new guild. We configure a few settings about the guild!"
@@ -47,6 +38,17 @@ class MessageCreateEvent extends BaseEvent {
         cmd = this.client.managers.cacheManager?.commands.get(command);
 
       if (!cmd) return;
+
+      if (!user) {
+        const userLoadingMsg = await msg.reply(
+          "Hey! This looks like your first command. We configure a few settings about you!"
+        );
+
+        user = await this.client.managers.databaseManager?.createUser(
+          msg.author
+        );
+        await userLoadingMsg.edit("Done!");
+      }
 
       if (cmd.options.onlyStaff && !user?.isStaff)
         return msg.reply("You are not a staff.");

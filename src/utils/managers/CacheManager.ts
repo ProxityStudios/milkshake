@@ -30,6 +30,8 @@ export class CacheManager extends BaseManager {
     console.log(
       `${this.guilds.size} guilds, ${this.users.size} users, ${this.commands.size} commands and ${this.events.size} events are cached`
     );
+
+    console.log("Cache manager loaded");
   }
 
   async cacheUsers(savedUsers: UserEntity[]): Promise<Map<string, UserEntity>> {

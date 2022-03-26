@@ -12,7 +12,9 @@ export class DatabaseManager extends BaseManager {
     this.repos = this.client.repos;
   }
 
-  async init(): Promise<void> {}
+  async init(): Promise<void> {
+    console.log("Nothing to load in database manager");
+  }
 
   async createGuild(guild: Guild): Promise<GuildEntity> {
     const savedGuild = await this.repos.guilds.findOne(guild.id);

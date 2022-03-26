@@ -4,6 +4,8 @@ Add:
 - registrar
 - uncache functions to cache manager
 - delete functions to database manager
+- command context for slash commands
+- add message embed creator
 
 Fix: 
 -
