@@ -37,7 +37,7 @@ class DiscordBot extends Client {
     commands: []
   };
 
-  async start(skipFiles?: boolean): Promise<void> {
+  async start(skipFiles: boolean = false): Promise<void> {
     if (!skipFiles) {
       this.files.events = await registerEvents(this, "../events");
       this.files.commands = await registerCommands(this, "../commands");
@@ -56,23 +56,25 @@ class DiscordBot extends Client {
 
     if (!this.connected) {
       console.error("FAILED TO CONNECT DISCORD!");
-      console.log("RETRYING TO CONNECT DISCORD...");
-      this.start(true);
+      console.log("RETRYING TO CONNECT DISCORD IN 4 SECONDS...");
+      setTimeout(() => {
+        this.start(true);
+      }, 4000);
     }
 
     // initialise managers
-    this.initManagers();
+    await this.initManagers();
   }
 
-  private initManagers(): void {
+  private async initManagers(): Promise<void> {
     this.managers = {
       cacheManager: Deps.add(CacheManager, new CacheManager(this)),
       databaseManager: Deps.add(DatabaseManager, new DatabaseManager(this))
     };
 
     this.cacheManager = this.managers.cacheManager;
-    this.managers.cacheManager?.init();
-    this.managers.databaseManager?.init();
+    await this.managers.cacheManager?.init();
+    await this.managers.databaseManager?.init();
   }
 }
 

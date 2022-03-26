@@ -14,24 +14,23 @@ class GuildCreateEvent extends BaseEvent {
   async handle(guild: Guild) {
     console.log("Joined to:", guild.id);
 
-    const cachedGuild = this.client.cacheManager?.guilds.get(guild.id);
+    const svdGuild = await this.client.repos.guilds.findOne(guild.id);
 
-    if (cachedGuild) {
-      guild.systemChannel?.send("Hey good to see you again guys");
-      this.client.cacheManager?.guilds.set(cachedGuild.id, cachedGuild);
-      return console.log("Guild exists:", cachedGuild.id);
+    if (svdGuild) {
+      this.client.managers.cacheManager?.cacheGuild(svdGuild);
+      await guild.systemChannel?.send(
+        `Good to see you again guys! Type \`${svdGuild.prefix}support-center\` to visit support center!`
+      );
+      return;
     }
 
-    guild.systemChannel?.send("Hey I'm new here");
+    const savedGuild = await this.client.managers.databaseManager?.createGuild(
+      guild
+    );
 
-    const newGuild = this.client.repos.guilds.create({
-        id: guild.id,
-        name: guild.name
-      }),
-      savedGuild = await this.client.repos.guilds.save(newGuild);
-
-    this.client.cacheManager?.cacheGuild(savedGuild);
-    console.log("Guild saved:", savedGuild.id);
+    await guild.systemChannel?.send(
+      `Hey I'm new here, Type \`${savedGuild?.prefix}help\` to learn my commands`
+    );
   }
 }
 

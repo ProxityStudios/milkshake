@@ -3,6 +3,7 @@ import { entities } from "@/utils/typeorm";
 
 const Configs = {
   Client: {
+    Version: "0.8.7",
     Managers: {
       CacheManager: {},
       DatabaseManager: {}

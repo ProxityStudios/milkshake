@@ -11,10 +11,10 @@ class MessageCreateEvent extends BaseEvent {
   }
 
   async handle(msg: Message) {
-    if (!msg.guild || msg.author.bot) return;
+    if (!msg.guild || !msg.member || msg.author.bot) return;
 
-    let user = this.client.cacheManager?.users.get(msg.author.id);
-    let guild = this.client.cacheManager?.guilds.get(msg.guild.id);
+    let user = this.client.managers.cacheManager?.users.get(msg.author.id);
+    let guild = this.client.managers.cacheManager?.guilds.get(msg.guild.id);
 
     if (!user) {
       const userLoadingMsg = await msg.reply(
@@ -44,7 +44,7 @@ class MessageCreateEvent extends BaseEvent {
           .slice(prefix.length)
           .trim()
           .split(/\s+/),
-        cmd = this.client.cacheManager?.commands.get(command);
+        cmd = this.client.managers.cacheManager?.commands.get(command);
 
       if (!cmd) return;
 

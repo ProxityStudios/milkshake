@@ -5,7 +5,7 @@ import { GuildEntity } from "../typeorm/entities/GuildEntity";
 import { UserEntity } from "../typeorm/entities/UserEntity";
 
 export class DatabaseManager extends BaseManager {
-  repos: Repositories;
+  private repos: Repositories;
 
   constructor(protected client: DiscordBot) {
     super();

@@ -1,6 +1,5 @@
 import { BaseCommand, CommandContext } from "@/utils";
 import { Message, MessageEmbed, MessageEmbedOptions } from "discord.js";
-import app from "../../../package.json";
 
 class BotInformationCommand extends BaseCommand {
   constructor() {
@@ -29,14 +28,14 @@ class BotInformationCommand extends BaseCommand {
         {
           name: "Client",
           value: `
-          Version: \`${app.version}\`
+          Version: \`${ctx.configs.Client.Version}\`
           Uptime: \`${uptime === 0 ? "a few seconds" : uptime + " minutes"}\``
         },
         {
           name: "Statistics",
           value: `
-          Guilds: \`${ctx.managers.cacheManager?.guilds.size}/${guildCount}/${ctx.client.guilds.cache.size}\` *(cached/saved/total)* 
-          Users: \`${ctx.managers.cacheManager?.users.size}/${userCount}/${ctx.client.users.cache.size}\` *(cached/saved/total)* 
+          Guilds: \`${ctx.managers.cacheManager?.guilds.size}/${guildCount}/${ctx.client.guilds.cache.size}\` *(cached/saved/current)* 
+          Users: \`${ctx.managers.cacheManager?.users.size}/${userCount}/${ctx.client.users.cache.size}\` *(cached/saved/current)* 
           `
         }
       ],
