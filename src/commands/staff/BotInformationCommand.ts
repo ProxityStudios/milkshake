@@ -1,5 +1,6 @@
 import { BaseCommand, CommandContext } from "@/utils";
 import { Message, MessageEmbed, MessageEmbedOptions } from "discord.js";
+import app from "../../../package.json";
 
 class BotInformationCommand extends BaseCommand {
   constructor() {
@@ -14,6 +15,7 @@ class BotInformationCommand extends BaseCommand {
     const loadingMsg = await msg.reply("Loading data...");
 
     const guildCount = await ctx.repos.guilds.count(),
+      userCount = await ctx.repos.users.count(),
       uptime = Math.floor(process.uptime() / 60);
 
     const infoEmbed = new MessageEmbed({
@@ -26,14 +28,15 @@ class BotInformationCommand extends BaseCommand {
       fields: [
         {
           name: "Client",
-          value: `Uptime: \`${
-            uptime === 0 ? "a few seconds" : uptime + " minutes"
-          }\``
+          value: `
+          Version: \`${app.version}\`
+          Uptime: \`${uptime === 0 ? "a few seconds" : uptime + " minutes"}\``
         },
         {
           name: "Statistics",
           value: `
-          Guilds: \`${ctx.cacheManager?.guilds.size}/${guildCount}/${ctx.client.guilds.cache.size}\` *(cached/saved/total)* 
+          Guilds: \`${ctx.managers.cacheManager?.guilds.size}/${guildCount}/${ctx.client.guilds.cache.size}\` *(cached/saved/total)* 
+          Users: \`${ctx.managers.cacheManager?.users.size}/${userCount}/${ctx.client.users.cache.size}\` *(cached/saved/total)* 
           `
         }
       ],

@@ -1,10 +1,10 @@
 import { ClientEvents, Constants, ConstantsEvents, Message } from "discord.js";
-import { getRepository, Repository } from "typeorm";
-
+import { Repository } from "typeorm";
 import DiscordBot from "@/DiscordBot";
 import { CacheManager, Deps } from "./";
 import { GuildEntity } from "./typeorm/entities/GuildEntity";
 import { UserEntity } from "./typeorm/entities/UserEntity";
+import { DatabaseManager } from "./managers";
 
 export enum Command {
   PING = "ping",
@@ -22,6 +22,13 @@ export interface EventOptions {
   on: keyof ConstantsEvents;
   enabled: boolean;
 }
+
+export type Managers = {
+  [key: string]: BaseManager | undefined;
+
+  cacheManager?: CacheManager;
+  databaseManager?: DatabaseManager;
+};
 
 export type ClientCache = {
   [key: string]: any;
@@ -42,6 +49,14 @@ export type Repositories = {
   guilds: Repository<GuildEntity>;
   users: Repository<UserEntity>;
 };
+
+export abstract class BaseManager {
+  constructor(
+    protected client: DiscordBot = Deps.get<DiscordBot>(DiscordBot)
+  ) {}
+
+  abstract init(...args: any): any;
+}
 
 export abstract class BaseEvent {
   constructor(public options: EventOptions) {}
@@ -66,8 +81,8 @@ export abstract class BaseCommand {
 export class CommandContext {
   constructor(public client = Deps.get<DiscordBot>(DiscordBot)) {}
 
-  get cacheManager(): CacheManager | undefined {
-    return this.client.cacheManager;
+  get managers(): Managers {
+    return this.client.managers;
   }
 
   get colors() {

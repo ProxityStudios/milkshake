@@ -1,6 +1,5 @@
 import path from "path";
 import { promises as fs } from "fs";
-
 import DiscordBot from "@/DiscordBot";
 import { BaseCommand, BaseEvent } from "./defs";
 

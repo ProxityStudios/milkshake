@@ -1,13 +1,11 @@
 import { ConnectionOptions } from "typeorm";
-
 import { entities } from "@/utils/typeorm";
 
 const Configs = {
   Client: {
     Managers: {
-      CacheManager: {
-        InitialCaching: true // for now stay with true
-      }
+      CacheManager: {},
+      DatabaseManager: {}
     },
     OwnerIDs: ["748366237788012695"],
     Colors: {

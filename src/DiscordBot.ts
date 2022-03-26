@@ -1,8 +1,14 @@
 import { Client } from "discord.js";
 
-import { registerCommands, registerEvents, CacheManager, Deps } from "@/utils";
+import {
+  registerCommands,
+  registerEvents,
+  CacheManager,
+  Deps,
+  DatabaseManager
+} from "@/utils";
 import Configs from "@/configs";
-import { ClientFiles, Repositories } from "./utils/defs";
+import { ClientFiles, Managers, Repositories } from "./utils/defs";
 import { getRepository } from "typeorm";
 import { GuildEntity } from "./utils/typeorm/entities/GuildEntity";
 import { UserEntity } from "./utils/typeorm/entities/UserEntity";
@@ -16,6 +22,11 @@ class DiscordBot extends Client {
   };
 
   // shortcuts
+  managers: Managers = {};
+
+  /**
+   * @deprecated use `managers.cacheManager` instead of this
+   */
   cacheManager?: CacheManager;
 
   connected: boolean;
@@ -54,10 +65,14 @@ class DiscordBot extends Client {
   }
 
   private initManagers(): void {
-    this.cacheManager = Deps.add(CacheManager, new CacheManager(this));
-    this.cacheManager.init(
-      this.configs.Client.Managers.CacheManager.InitialCaching
-    );
+    this.managers = {
+      cacheManager: Deps.add(CacheManager, new CacheManager(this)),
+      databaseManager: Deps.add(DatabaseManager, new DatabaseManager(this))
+    };
+
+    this.cacheManager = this.managers.cacheManager;
+    this.managers.cacheManager?.init();
+    this.managers.databaseManager?.init();
   }
 }
 

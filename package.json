@@ -1,6 +1,6 @@
 {
   "name": "milkshake-bot",
-  "version": "0.0.1",
+  "version": "0.8.7",
   "scripts": {
     "start": "node ./dist/index.js",
     "dev": "tsc-watch -p ./tsconfig.json --onSuccess \"node ./dist/index.js\"",
