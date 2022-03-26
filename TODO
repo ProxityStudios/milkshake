@@ -2,6 +2,8 @@ Add:
 - validations to commands (permission check, args checl etc.)
 - multiple languages
 - registrar
+- uncache functions to cache manager
+- delete functions to database manager
 
 Fix: 
 -

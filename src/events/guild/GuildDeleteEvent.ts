@@ -14,6 +14,8 @@ class GuildDeleteEvent extends BaseEvent {
   async handle(guild: Guild) {
     console.log("Left from:", guild.id);
 
+    this.client.managers.cacheManager?.guilds.delete(guild.id);
+
     const guildOwner = await this.client.users.fetch(guild.ownerId);
     guildOwner
       .send(
