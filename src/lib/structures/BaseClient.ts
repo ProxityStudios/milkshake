@@ -5,13 +5,15 @@ import { Types, Utils } from '..';
 import { getAllFilesSync } from 'get-all-files';
 import { join } from 'path';
 import { isClass } from '@sapphire/utilities';
+import { gray, green } from 'colorette';
+import type { DatabaseService } from './services';
 
 export class BaseClient extends SapphireClient {
 	readonly config: typeof container.config = Config;
 	readonly defaultPrefix = this.config.client.defaultPrefix;
 	readonly defaultLanguage = this.config.client.defaultLanguage;
 
-	services: typeof container.services = new Map();
+	services: Types.Services = new Map();
 
 	constructor(options: ClientOptions) {
 		super(options);
@@ -20,11 +22,7 @@ export class BaseClient extends SapphireClient {
 		container.services = this.services;
 	}
 
-	async run() {
-		await this.loadServices(join(__dirname, 'services'), this.services);
-	}
-
-	loadServices(folder: string, map: Map<Types.BaseService, Types.BaseService>): Promise<typeof map> {
+	loadServices(folder: string, map: Types.Services): Promise<typeof map> {
 		return new Promise<typeof map>(async (res) => {
 			for (const filename of getAllFilesSync(folder).toArray()) {
 				if (!filename.endsWith('js')) continue;
@@ -34,8 +32,8 @@ export class BaseClient extends SapphireClient {
 				if (!isClass(Service)) continue;
 
 				const instance: Types.BaseService = new Service();
+				map.set(instance.name, instance);
 				await instance.run();
-				map.set(instance, instance);
 			}
 
 			res(map);
@@ -43,13 +41,24 @@ export class BaseClient extends SapphireClient {
 	}
 
 	override async login(token?: string): Promise<string> {
-		const str = await super.login(token ?? Utils.envParseString('DISCORD_APP_TOKEN'));
-		await this.run();
-		return str;
+		let tkn: string = '';
+
+		try {
+			container.logger.info(gray('Connecting to discord...'));
+			tkn = await super.login(token ?? Utils.envParseString('DISCORD_APP_TOKEN'));
+			container.logger.info(green('Connected to discord.'));
+
+			await this.loadServices(join(__dirname, 'services'), this.services);
+		} catch (e: any) {
+			container.logger.fatal(e);
+		}
+
+		return tkn;
 	}
 
 	override destroy(): void {
 		super.destroy();
+		this.services.get<DatabaseService>(Types.Service.DatabaseService).dataSources.forEach((source) => source.destroy());
 		return process.exit();
 	}
 }

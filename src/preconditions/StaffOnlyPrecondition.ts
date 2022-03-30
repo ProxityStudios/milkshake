@@ -8,7 +8,7 @@ import { Types } from '../lib';
 	name: Types.Precondition.StaffOnly
 })
 export class UserPrecondition extends Precondition {
-	public async run(message: Message) {
+ async run(message: Message) {
 		return this.container.config.client.staffIDs.includes(message.author.id)
 			? this.ok()
 			: this.error({ message: await resolveKey(message, 'preconditions/staff-only:ERROR') });

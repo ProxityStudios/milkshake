@@ -9,14 +9,14 @@ import type { Guild, User } from 'discord.js';
 	event: Events.CommandSuccess
 })
 export class UserEvent extends Listener<typeof Events.CommandSuccess> {
-	public constructor(context: PieceContext, options?: ListenerOptions) {
+	constructor(context: PieceContext, options?: ListenerOptions) {
 		super(context, {
 			...options,
 			event: Events.CommandSuccess
 		});
 	}
 
-	public run({ message, command }: CommandSuccessPayload) {
+	run({ message, command }: CommandSuccessPayload) {
 		const shard = this.shard(message.guild?.shardId ?? 0);
 		const commandName = this.command(command);
 		const author = this.author(message.author);
@@ -24,7 +24,7 @@ export class UserEvent extends Listener<typeof Events.CommandSuccess> {
 		this.container.logger.debug(`${shard} - ${commandName} ${author} ${sentAt}`);
 	}
 
-	public onLoad() {
+	onLoad() {
 		this.enabled = (this.container.logger as Logger).level <= LogLevel.Debug;
 		return super.onLoad();
 	}

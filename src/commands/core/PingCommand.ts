@@ -7,7 +7,7 @@ import { Types } from '../../lib';
 @ApplyOptions<CommandOptions>({
 	name: Types.CoreCategoryCommand.Ping
 })
-export class UserCommand extends Command {
+export class CoreCommand extends Command {
 	async messageRun(message: Message) {
 		const msg = await replyLocalized(message, 'commands/ping:PINGING');
 

@@ -13,6 +13,5 @@ import { srcDir } from './constants';
 import { config } from 'dotenv-cra';
 
 config({ path: join(srcDir, '.env') });
-
 inspect.defaultOptions.depth = 1;
 colorette.createColors({ useColor: true });

@@ -3,8 +3,10 @@ import { isNullishOrEmpty } from '@sapphire/utilities';
 import { Message, MessageEmbed } from 'discord.js';
 import { LoadingMessages } from './constants';
 
-export function envParseArray(key: 'OWNERS', defaultValue?: string[]): string[] {
+// add types
+export function envParseArray(key: string, defaultValue?: string[]): string[] {
 	const value = process.env[key];
+
 	if (isNullishOrEmpty(value)) {
 		if (defaultValue === undefined) throw new Error(`[ENV] ${key} - The key must be an array, but is empty or undefined.`);
 		return defaultValue;
@@ -13,8 +15,10 @@ export function envParseArray(key: 'OWNERS', defaultValue?: string[]): string[] 
 	return value.split(' ');
 }
 
-export function envParseString(key: 'DISCORD_APP_TOKEN', defaultValue?: string): string {
+// add types
+export function envParseString(key: string, defaultValue?: string): string {
 	const value = process.env[key];
+
 	if (isNullishOrEmpty(value)) {
 		if (defaultValue === undefined) throw new Error(`[ENV] ${key} - The key must be an string, but is empty or undefined.`);
 		return defaultValue;
@@ -23,6 +27,17 @@ export function envParseString(key: 'DISCORD_APP_TOKEN', defaultValue?: string):
 	return value;
 }
 
+// add types
+export function envParseInteger(key: string, defaultValue?: number): number {
+	const value = Number(process.env[key]);
+
+	if (isNullishOrEmpty(value)) {
+		if (defaultValue === undefined) throw new Error(`[ENV] ${key} - The key must be an string, but is empty or undefined.`);
+		return defaultValue;
+	}
+
+	return value;
+}
 
 /**
  * Picks a random item from an array

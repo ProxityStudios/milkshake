@@ -2,6 +2,8 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Events, ListenerOptions, PieceContext } from '@sapphire/framework';
 import { Listener, Store } from '@sapphire/framework';
 import { blue, gray, green, magenta, magentaBright, white, yellow } from 'colorette';
+import { Types } from '../lib';
+import type { DatabaseService } from '../lib/structures/services';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -12,19 +14,35 @@ const dev = process.env.NODE_ENV !== 'production';
 export class UserEvent extends Listener<typeof Events.ClientReady> {
 	private readonly style = dev ? yellow : blue;
 
-	public constructor(context: PieceContext, options?: ListenerOptions) {
+	constructor(context: PieceContext, options?: ListenerOptions) {
 		super(context, {
 			...options,
 			once: true
 		});
 	}
 
-	public run() {
+	async run() {
 		this.printBanner();
 		this.printStoreDebugInformation();
+
+		for (const guild of this.container.client.guilds.cache.map((g) => g)) {
+			const appGuildRepo = this.container.services.get<DatabaseService>(Types.Service.DatabaseService).repos[0].guilds!;
+
+			const isExists = await appGuildRepo.findOneBy({
+				id: guild.id
+			});
+
+			if (isExists) return;
+
+			const newGuild = appGuildRepo.create({
+				id: guild.id,
+				language: 'en-US'
+			});
+			await appGuildRepo.save(appGuildRepo.create(newGuild));
+		}
 	}
 
-	private printBanner() {
+	printBanner() {
 		const success = green('+');
 
 		const llc = dev ? magentaBright : white;

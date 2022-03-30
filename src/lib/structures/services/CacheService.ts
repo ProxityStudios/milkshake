@@ -1,8 +1,12 @@
 import { container } from '@sapphire/framework';
-import type { BaseService } from '../../types';
+import { Types } from '../..';
 
-export default class CacheService implements BaseService {
+export default class CacheService extends Types.BaseService {
 	// guilds: Map<string, GuildEntity> = new Map();
+
+	constructor() {
+		super(Types.Service.CacheService);
+	}
 
 	run() {
 		container.client.logger.info('Cache service');

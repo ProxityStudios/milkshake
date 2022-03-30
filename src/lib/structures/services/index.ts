@@ -1,2 +1,2 @@
-export * from './CacheService';
-export * from './DatabaseService';
+export { default as CacheService } from './CacheService';
+export { default as DatabaseService } from './DatabaseService';

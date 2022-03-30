@@ -1,9 +1,11 @@
 import './lib/setup';
 import { container, LogLevel } from '@sapphire/framework';
 import { BaseClient } from './lib/structures';
-import { gray } from 'colorette';
+import { gray, green } from 'colorette';
 import type { InternationalizationContext } from '@sapphire/plugin-i18next';
 import { Config } from './config';
+import { Types } from './lib';
+import type { DatabaseService } from './lib/structures/services';
 
 const client = new BaseClient({
 	caseInsensitiveCommands: true,
@@ -25,19 +27,20 @@ const client = new BaseClient({
 		fetchLanguage: async (context: InternationalizationContext) => {
 			if (!context.guild) return container.client.defaultLanguage;
 
-			// const guildSettings = await container.database.findOne(context.guild.id);
-			// return guildSettings.language;
+			const guildSettings = await container.services
+				.get<DatabaseService>(Types.Service.DatabaseService)
+				.repos[0].guilds?.findOneBy({ id: context.guild.id });
 
-			return container.client.defaultLanguage;
+			return guildSettings?.language ?? container.client.defaultLanguage;
 		}
 	}
 });
 
 const main = async () => {
 	try {
-		client.logger.info(gray('Connecting to discord...'));
+		client.logger.info(gray('Starting the client...'));
 		await client.login();
-		client.logger.info(gray('Connected to discord.'));
+		client.logger.info(green('All things are done.'));
 	} catch (error) {
 		client.logger.fatal(error);
 		client.destroy();

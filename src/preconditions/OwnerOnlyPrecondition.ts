@@ -8,9 +8,9 @@ import { Types } from '../lib';
 	name: Types.Precondition.OwnerOnly
 })
 export class UserPrecondition extends Precondition {
-	public async run(message: Message) {
+	async run(message: Message) {
 		return this.container.config.client.ownerIDs.includes(message.author.id)
 			? this.ok()
-			: this.error({ message: await resolveKey(message, "preconditions/owner-only:ERROR") });
+			: this.error({ message: await resolveKey(message, 'preconditions/owner-only:ERROR') });
 	}
 }
