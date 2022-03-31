@@ -12,7 +12,9 @@ export default class DatabaseService extends Types.BaseService {
 	};
 
 	constructor() {
-		super(Types.Service.DatabaseService);
+		super(Types.Service.DatabaseService, {
+			priority: Types.Priority.High
+		});
 	}
 
 	async run() {

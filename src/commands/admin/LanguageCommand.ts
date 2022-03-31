@@ -13,11 +13,13 @@ import type { DatabaseService } from '../../lib/structures/services';
 	requiredUserPermissions: ['ADMINISTRATOR']
 })
 export class AdminCommand extends SubCommandPluginCommand {
+	appRepos = this.container.services.get<DatabaseService>(Types.Service.DatabaseService)?.repos[0];
+
 	// async reset(message: Message, args: Args) {}
 	async set(message: Message, args: Args) {
-		const guildSettings = await this.container.services
-			.get<DatabaseService>(Types.Service.DatabaseService)
-			.repos[0].guilds?.findOneBy({ id: message.guildId! });
+		if (!message.guildId) return;
+
+		const guildSettings = await this.appRepos?.guilds?.findOneBy({ id: message.guildId });
 
 		if (!guildSettings) return;
 
@@ -26,9 +28,7 @@ export class AdminCommand extends SubCommandPluginCommand {
 		if (!language.success) return replyLocalized(message, 'commands/language:SET.MISSING_ARGUMENT');
 		guildSettings.language = language.value as Types.Language;
 
-		const savedGuildSettings = await this.container.services
-			.get<DatabaseService>(Types.Service.DatabaseService)
-			.repos[0].guilds?.save(guildSettings!);
+		const savedGuildSettings = await this.appRepos?.guilds?.save(guildSettings!);
 
 		return sendLocalized(message, {
 			keys: 'commands/language:SET.SUCCESS',
@@ -41,9 +41,7 @@ export class AdminCommand extends SubCommandPluginCommand {
 	async current(message: Message) {
 		const loadingMsg = await Utils.sendLoadingMessage(message);
 
-		const guildSettings = await this.container.services
-			.get<DatabaseService>(Types.Service.DatabaseService)
-			.repos[0].guilds?.findOneBy({ id: message.guildId! });
+		const guildSettings = await this.appRepos?.guilds?.findOneBy({ id: message.guildId! });
 
 		await loadingMsg.delete();
 		await replyLocalized(message, {

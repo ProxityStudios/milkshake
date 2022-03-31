@@ -29,7 +29,7 @@ const client = new BaseClient({
 
 			const guildSettings = await container.services
 				.get<DatabaseService>(Types.Service.DatabaseService)
-				.repos[0].guilds?.findOneBy({ id: context.guild.id });
+				?.repos[0].guilds?.findOneBy({ id: context.guild.id });
 
 			return guildSettings?.language ?? container.client.defaultLanguage;
 		}
@@ -41,8 +41,8 @@ const main = async () => {
 		client.logger.info(gray('Starting the client...'));
 		await client.login();
 		client.logger.info(green('All things are done.'));
-	} catch (error) {
-		client.logger.fatal(error);
+	} catch (e) {
+		client.logger.fatal(e);
 		client.destroy();
 		process.exit(1);
 	}
