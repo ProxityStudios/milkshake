@@ -8,8 +8,8 @@ import { inspect } from 'util';
 import { Types } from '../../lib';
 
 @ApplyOptions<CommandOptions>({
-	name: Types.OwnerCategoryCommand.Eval,
-	preconditions: [Types.Precondition.OwnerOnly],
+	name: Types.Commands.Owner.Eval,
+	preconditions: [Types.Preconditions.Owner.OwnerOnly],
 	flags: ['async', 'hidden', 'showHidden', 'silent', 's'],
 	options: ['depth']
 })

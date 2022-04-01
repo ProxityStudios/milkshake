@@ -1,16 +1,17 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Events, ListenerOptions, PieceContext } from '@sapphire/framework';
 import { Listener, Store } from '@sapphire/framework';
-import { blue, gray, green, magenta, magentaBright, white, yellow } from 'colorette';
+import { blue, gray, yellow } from 'colorette';
+import { Utils } from '../lib';
 
-const dev = process.env.NODE_ENV !== 'production';
+const APP_MODE = Utils.envParseString('NODE_ENV', 'development');
 
 @ApplyOptions<ListenerOptions>({
 	event: Events.ClientReady,
 	once: true
 })
 export class UserEvent extends Listener<typeof Events.ClientReady> {
-	private readonly style = dev ? yellow : blue;
+	private readonly style = APP_MODE === 'development' ? yellow : blue;
 
 	constructor(context: PieceContext, options?: ListenerOptions) {
 		super(context, {
@@ -20,31 +21,7 @@ export class UserEvent extends Listener<typeof Events.ClientReady> {
 	}
 
 	async run() {
-		this.printBanner();
 		this.printStoreDebugInformation();
-	}
-
-	printBanner() {
-		const success = green('+');
-
-		const llc = dev ? magentaBright : white;
-		const blc = dev ? magenta : blue;
-
-		const line01 = llc('');
-		const line02 = llc('');
-		const line03 = llc('');
-
-		// Offset Pad
-		const pad = ' '.repeat(7);
-
-		console.log(
-			String.raw`
-${blc(this.container.client.user?.username.toUpperCase()!)}
-${line01} ${pad}${blc(this.container.config.version)}
-${line02} ${pad}[${success}] Gateway
-${line03}${dev ? ` ${pad}${blc('<')}${llc('/')}${blc('>')} ${llc('DEVELOPMENT MODE')}` : ''}
-		`.trim()
-		);
 	}
 
 	private printStoreDebugInformation() {

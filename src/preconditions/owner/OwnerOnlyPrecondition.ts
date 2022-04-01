@@ -2,10 +2,10 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Precondition, PreconditionOptions } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
 import type { Message } from 'discord.js';
-import { Types } from '../lib';
+import { Types } from '../../lib';
 
 @ApplyOptions<PreconditionOptions>({
-	name: Types.Precondition.OwnerOnly
+	name: Types.Preconditions.Owner.OwnerOnly
 })
 export class UserPrecondition extends Precondition {
 	async run(message: Message) {

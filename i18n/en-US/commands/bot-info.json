@@ -1,0 +1,14 @@
+{
+	"EMBED": {
+		"DESCRIPTION": "Some info of the bot shown below.",
+		"FIELDS": {
+			"0": {
+				"NAME": "Client",
+				"VALUE": "Total Users: **{{totalUserCount}}** \nTotal Guilds: **{{totalGuildCount}}**"
+			}
+		},
+		"FOOTER": {
+			"TEXT": "Current Version: {{appVersion}}"
+		}
+	}
+}

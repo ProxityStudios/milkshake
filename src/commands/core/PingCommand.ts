@@ -5,7 +5,7 @@ import type { Message } from 'discord.js';
 import { Types } from '../../lib';
 
 @ApplyOptions<CommandOptions>({
-	name: Types.CoreCategoryCommand.Ping
+	name: Types.Commands.Core.Ping
 })
 export class CoreCommand extends Command {
 	async messageRun(message: Message) {

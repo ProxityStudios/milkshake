@@ -1,50 +1,49 @@
-import { send } from '@sapphire/plugin-editable-commands';
-import { isClass, isNullishOrEmpty } from '@sapphire/utilities';
-import { Message, MessageEmbed } from 'discord.js';
-import { getAllFilesSync } from 'get-all-files';
-import type { Types } from '.';
+import { reply } from '@sapphire/plugin-editable-commands';
+import { isNullishOrEmpty } from '@sapphire/utilities';
+import type { Message } from 'discord.js';
 import { LoadingMessages } from './constants';
 
-export function loadServices(folder: string, map: Types.Services): Promise<typeof map> {
-	const services: Types.BaseService[] = [];
-	let sortedServicesByPriority: typeof services = [];
+// export function loadServices(folder: string, map: Types.Services): Promise<typeof map> {
+// 	const services: Types.BaseService[] = [];
+// 	let sortedServicesByPriority: typeof services = [];
 
-	return new Promise<typeof map>(async (res) => {
-		for await (const filename of getAllFilesSync(folder).toArray()) {
-			if (!filename.endsWith('js')) continue;
+// 	return new Promise<typeof map>(async (res) => {
+// 		for await (const filename of getAllFilesSync(folder).toArray()) {
+// 			if (!filename.endsWith('js')) continue;
 
-			const { default: Service } = await import(filename);
+// 			const { default: Service } = await import(filename);
 
-			if (!isClass(Service)) continue;
+// 			if (!isClass(Service)) continue;
 
-			const instance: Types.BaseService = new Service();
+// 			const instance: Types.BaseService = new Service();
 
-			if (instance.options.disabled) continue;
+// 			if (instance.options.disabled) continue;
 
-			services.push(instance);
-		}
+// 			services.push(instance);
+// 		}
 
-		sortedServicesByPriority = services
-			.sort((a, b) => {
-				if (a.options.priority > b.options.priority) {
-					return 1;
-				} else if (a.options.priority! < b.options.priority!) {
-					return -1;
-				}
-				return 0;
-			})
-			.reverse();
+// 		sortedServicesByPriority = services
+// 			.sort((a, b) => {
+// 				if (a.options.priority > b.options.priority) {
+// 					return 1;
+// 				} else if (a.options.priority! < b.options.priority!) {
+// 					return -1;
+// 				}
+// 				return 0;
+// 			})
+// 			.reverse();
 
-		sortedServicesByPriority.forEach(async (instance) => {
-			await instance.run();
-			map.set(instance.name, instance);
-		});
+// 		sortedServicesByPriority.forEach(async (instance) => {
+// 			await instance.run();
+// 			map.set(instance.name, instance);
+// 		});
 
-		res(map);
-	});
-}
+// 		res(map);
+// 	});
+// }
 
 // add types
+
 export function envParseArray(key: string, defaultValue?: string[]): string[] {
 	const value = process.env[key];
 
@@ -96,5 +95,5 @@ export function pickRandom<T>(array: readonly T[]): T {
  * @param message The message data for which to send the loading message
  */
 export function sendLoadingMessage(message: Message): Promise<typeof message> {
-	return send(message, { embeds: [new MessageEmbed({ description: pickRandom(LoadingMessages) })] });
+	return reply(message, pickRandom(LoadingMessages));
 }

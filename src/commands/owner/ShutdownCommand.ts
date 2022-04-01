@@ -5,12 +5,12 @@ import type { Message } from 'discord.js';
 import { Types } from '../../lib';
 
 @ApplyOptions<CommandOptions>({
-	name: Types.OwnerCategoryCommand.Shutdown,
-	preconditions: [Types.Precondition.OwnerOnly]
+	name: Types.Commands.Owner.Shutdown,
+	preconditions: [Types.Preconditions.Owner.OwnerOnly]
 })
 export class OwnerCommand extends Command {
 	async messageRun(message: Message) {
 		await sendLocalized(message, 'commands/shutdown:SUCCESS');
-		return this.container.client.destroy();
+		return void this.container.client.destroy();
 	}
 }
