@@ -1,7 +1,0 @@
-{
-	"CURRENT": "Dil **{{guildLanguage}}** olarak ayarlandı",
-	"SET": {
-		"SUCCESS": "Dil **{{guildLanguage}}** olarak ayarlandı!",
-		"MISSING_ARGUMENT": "Lütfen bir değer girin."
-	}
-}
