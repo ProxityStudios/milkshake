@@ -4,7 +4,7 @@
 		"FIELDS": {
 			"0": {
 				"NAME": "Client",
-				"VALUE": "Total Users: **{{totalUserCount}}** \nTotal Guilds: **{{totalGuildCount}}**"
+				"VALUE": "Total Users: **{{totalUserCount}}** \nGuilds: **{{cachedGuildCount}}/{{totalGuildCount}}** *(cached/total)*"
 			}
 		},
 		"FOOTER": {

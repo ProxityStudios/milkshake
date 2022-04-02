@@ -5,6 +5,7 @@
 		"outDir": "dist",
 		"tsBuildInfoFile": "dist/.tsbuildinfo",
 		"resolveJsonModule": true,
+		"strictPropertyInitialization": false,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true
 	},

@@ -1,5 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Events, ListenerOptions, PieceContext } from '@sapphire/framework';
+import { Events, ListenerOptions } from '@sapphire/framework';
 import { Listener, Store } from '@sapphire/framework';
 import { blue, gray, yellow } from 'colorette';
 import { Utils } from '../lib';
@@ -10,17 +10,10 @@ const APP_MODE = Utils.envParseString('NODE_ENV', 'development');
 	event: Events.ClientReady,
 	once: true
 })
-export class UserEvent extends Listener<typeof Events.ClientReady> {
+export class ClientEvent extends Listener<typeof Events.ClientReady> {
 	private readonly style = APP_MODE === 'development' ? yellow : blue;
 
-	constructor(context: PieceContext, options?: ListenerOptions) {
-		super(context, {
-			...options,
-			once: true
-		});
-	}
-
-	async run() {
+	run() {
 		this.printStoreDebugInformation();
 	}
 

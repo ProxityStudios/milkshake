@@ -1,5 +1,5 @@
 import { Types, Utils } from './lib';
-// import { AppDataSource } from './lib/database';
+import { appEntities } from './lib/entities';
 
 export const Config: Types.AppConfig = {
 	version: process.env.npm_package_version!,
@@ -10,7 +10,7 @@ export const Config: Types.AppConfig = {
 		defaultLanguage: 'en-US'
 	},
 	dataSources: {
-		0: {
+		app: {
 			type: 'mysql',
 			host: Utils.envParseString('APP_SOURCE_MYSQL_DATABASE_HOST', 'localhost'),
 			port: Utils.envParseInteger('APP_SOURCE_MYSQL_DATABASE_PORT', 3306),
@@ -19,7 +19,7 @@ export const Config: Types.AppConfig = {
 			database: Utils.envParseString('APP_SOURCE_MYSQL_DATABASE_NAME', 'milkshake_bot_v2'),
 			synchronize: true,
 			logging: false,
-			// entities: AppDataSource.entities,
+			entities: appEntities,
 			subscribers: [],
 			migrations: []
 		}

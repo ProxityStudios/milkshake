@@ -8,7 +8,7 @@ import type { Guild, User } from 'discord.js';
 @ApplyOptions<ListenerOptions>({
 	event: Events.CommandSuccess
 })
-export class UserEvent extends Listener<typeof Events.CommandSuccess> {
+export class CommandEvent extends Listener<typeof Events.CommandSuccess> {
 	run({ message, command }: CommandSuccessPayload) {
 		const shard = this.shard(message.guild?.shardId ?? 0);
 		const commandName = this.command(command);

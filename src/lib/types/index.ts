@@ -1,13 +1,18 @@
 import type { Snowflake } from 'discord.js';
 import type { DataSourceOptions } from 'typeorm';
+import type * as Service from './service';
 import * as Preconditions from './preconditions';
+import type { BaseService } from '../structures/BaseService';
 
 export * as Preconditions from './preconditions';
+export * as Service from './service';
 export * as Commands from './commands';
+export * as Database from './database';
 
 declare module '@sapphire/pieces' {
 	interface Container {
 		config: AppConfig;
+		services: ExtendedMap<Service.Name, BaseService>;
 	}
 }
 
@@ -25,7 +30,11 @@ declare module '@sapphire/framework' {
 	}
 }
 
-export type Language = 'en-US' | 'tr-TR';
+declare class ExtendedMap<V = any, T = any> extends Map {
+	get<K extends T>(name: V): K;
+}
+
+export type Language = 'en-US';
 export interface AppConfig {
 	version: string;
 	client: {
@@ -35,6 +44,6 @@ export interface AppConfig {
 		defaultLanguage: Language;
 	};
 	dataSources: {
-		[key: number]: DataSourceOptions;
+		app: DataSourceOptions;
 	};
 }

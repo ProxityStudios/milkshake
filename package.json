@@ -1,6 +1,6 @@
 {
 	"name": "milkshake-bot-v2",
-	"version": "1.0.7",
+	"version": "1.8.0",
 	"main": "dist/main.js",
 	"author": "Proxity Studios",
 	"scripts": {
