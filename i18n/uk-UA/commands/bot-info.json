@@ -1,0 +1,14 @@
+{
+	"EMBED": {
+		"DESCRIPTION": "Деякі відомості про бота показано нижче.",
+		"FIELDS": {
+			"0": {
+				"NAME": "Client",
+				"VALUE": "Total Users: **{{totalUserCount}}** \nGuilds: **{{cachedGuildCount}}/{{totalGuildCount}}** *(cached/total)*"
+			}
+		},
+		"FOOTER": {
+			"TEXT": "Current Version: {{appVersion}}"
+		}
+	}
+}
