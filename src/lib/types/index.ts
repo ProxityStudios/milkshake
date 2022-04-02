@@ -34,7 +34,7 @@ declare class ExtendedMap<V = any, T = any> extends Map {
 	get<K extends T>(name: V): K;
 }
 
-export type Language = 'en-US' | 'tr-TR';
+export type Language = 'en-US' | 'tr-TR' | 'uk-UA';
 
 export interface AppConfig {
 	version: string;
