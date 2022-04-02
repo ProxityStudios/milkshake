@@ -27,14 +27,17 @@ const client = new BaseClient({
 	typing: true,
 	defaultPrefix: Config.client.defaultPrefix,
 	i18n: {
+		hmr: {
+			enabled: true
+		},
 		defaultLanguageDirectory: 'i18n',
 		fetchLanguage: async (context): Promise<Types.Language> => {
 			const { defaultLanguage } = container.config.client;
 
 			if (!context.guild) return defaultLanguage;
 
-			const appDataManager = container.services.get<Database>('DATABASE')?.dataSources.app.manager;
-			const savedGuild = await appDataManager?.findOneBy(Guild, { id: context.guild.id });
+			const appDataManager = container.services.get<Database>('DATABASE').dataSources.app.manager;
+			const savedGuild = await appDataManager.findOneBy(Guild, { id: context.guild.id });
 
 			if (!savedGuild) return defaultLanguage;
 
@@ -46,8 +49,8 @@ const client = new BaseClient({
 
 		if (!message.guild) return defaultPrefix;
 
-		const appDataManager = container.services.get<Database>('DATABASE')?.dataSources.app.manager;
-		const savedGuild = await appDataManager?.findOneBy(Guild, { id: message.guildId! });
+		const appDataManager = container.services.get<Database>('DATABASE').dataSources.app.manager;
+		const savedGuild = await appDataManager.findOneBy(Guild, { id: message.guildId! });
 
 		if (!savedGuild) return defaultPrefix;
 

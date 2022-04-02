@@ -34,36 +34,8 @@ declare class ExtendedMap<V = any, T = any> extends Map {
 	get<K extends T>(name: V): K;
 }
 
-export type Language =
-	| 'af'
-	| 'ar'
-	| 'ca'
-	| 'cs'
-	| 'da'
-	| 'en'
-	| 'es-ES'
-	| 'fi'
-	| 'fr'
-	| 'he'
-	| 'hu'
-	| 'it'
-	| 'ja'
-	| 'ko'
-	| 'nl'
-	| 'no'
-	| 'pl'
-	| 'pt-BR'
-	| 'pt-PT'
-	| 'ro'
-	| 'ru'
-	| 'sr'
-	| 'sv-SE'
-	| 'tr'
-	| 'uk'
-	| 'vi'
-	| 'zh-CN'
-	| 'zh-TW';
-	
+export type Language = 'en-US' | 'tr-TR';
+
 export interface AppConfig {
 	version: string;
 	client: {

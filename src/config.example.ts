@@ -7,7 +7,7 @@ export const Config: Types.AppConfig = {
 		ownerIDs: ['748366237788012695'],
 		staffIDs: [],
 		defaultPrefix: '?',
-		defaultLanguage: 'en'
+		defaultLanguage: 'en-US'
 	},
 	dataSources: {
 		app: {
