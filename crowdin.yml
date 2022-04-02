@@ -1,13 +1,10 @@
-project_id: '507864'
-api_token: '9b1e8901250f148c9e919cd0d127897f62e3c260aba7ea65d776776a2255135efd219fd42b7d04d7'
-base_path: '/i18n'
-
+base_path: /i18n
 files:
-  - source: '/en-US/*.json'
-    translation: '/%locale%/%original_file_name%'
-  - source: '/en-US/commands/*.json'
-    translation: '/%locale%/commands/%original_file_name%'
-  - source: '/en-US/listeners/*.json'
-    translation: '/%locale%/listeners/%original_file_name%'
-  - source: '/en-US/preconditions/*.json'
-    translation: '/%locale%/preconditions/%original_file_name%'
+  - source: /en-US/*.json
+    translation: /%locale%/%original_file_name%
+  - source: /en-US/commands/*.json
+    translation: /%locale%/commands/%original_file_name%
+  - source: /en-US/listeners/*.json
+    translation: /%locale%/listeners/%original_file_name%
+  - source: /en-US/preconditions/*.json
+    translation: /%locale%/preconditions/%original_file_name%
