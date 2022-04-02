@@ -17,11 +17,11 @@ export class StaffCommand extends Command {
 		const appDataManager = this.container.services.get<Database>('DATABASE')?.dataSources.app.manager;
 
 		const embedTexts = {
-			description: await resolveKey(message, 'commands/bot-info:EMBED.DESCRIPTION'),
+			description: await resolveKey(message, 'commands/staff/bot-info:EMBED.DESCRIPTION'),
 			fields: {
 				0: {
-					name: await resolveKey(message, 'commands/bot-info:EMBED.FIELDS.0.NAME'),
-					value: await resolveKey(message, 'commands/bot-info:EMBED.FIELDS.0.VALUE', {
+					name: await resolveKey(message, 'commands/staff/bot-info:EMBED.FIELDS.0.NAME'),
+					value: await resolveKey(message, 'commands/staff/bot-info:EMBED.FIELDS.0.VALUE', {
 						totalGuildCount: this.container.client.guilds.cache.size,
 						totalUserCount: this.container.client.users.cache.size,
 						cachedGuildCount: await appDataManager?.count(Guild)
@@ -29,7 +29,7 @@ export class StaffCommand extends Command {
 				}
 			},
 			footer: {
-				text: await resolveKey(message, 'commands/bot-info:EMBED.FOOTER.TEXT', { appVersion: this.container.config.version })
+				text: await resolveKey(message, 'commands/staff/bot-info:EMBED.FOOTER.TEXT', { appVersion: this.container.config.version })
 			}
 		};
 

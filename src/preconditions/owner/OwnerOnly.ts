@@ -11,6 +11,6 @@ export class UserPrecondition extends Precondition {
 	async run(message: Message) {
 		return this.container.config.client.ownerIDs.includes(message.author.id)
 			? this.ok()
-			: this.error({ message: await resolveKey(message, 'preconditions/owner-only:ERROR') });
+			: this.error({ message: await resolveKey(message, 'preconditions/owner/owner-only:ERROR') });
 	}
 }

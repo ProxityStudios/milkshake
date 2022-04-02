@@ -8,6 +8,7 @@ import { Config } from './config';
 import { Types, Utils } from './lib';
 import type { Database } from './lib/services/Database';
 import { Guild } from './lib/entities/app/Guild';
+import glob from 'glob';
 
 const APP_MODE = Utils.envParseString('NODE_ENV', 'development');
 
@@ -30,7 +31,23 @@ const client = new BaseClient({
 		hmr: {
 			enabled: true
 		},
-		defaultLanguageDirectory: 'i18n',
+		i18next: {
+			debug: true,
+			ns: glob.sync(`${Config.client.i18n.defaultLanguageDirectory}/${Config.client.defaultLanguage}/**/*.json`).map((file) => {
+				const ns = file.split('/').slice(-3);
+
+				if (ns[0] === 'i18n') {
+					const [_1, _2, ...rest] = ns;
+					return rest[0].replace('.json', '');
+				}
+
+				return ns[0] + '/' + ns[1] + '/' + ns[2].replace('.json', '');
+			}),
+			backend: {
+				loadPath: (lang: string, ns: string) => `${Config.client.i18n.defaultLanguageDirectory}/${lang}/${ns}.json`
+			}
+		},
+		defaultLanguageDirectory: Config.client.i18n.defaultLanguageDirectory,
 		fetchLanguage: async (context): Promise<Types.Language> => {
 			const { defaultLanguage } = container.config.client;
 

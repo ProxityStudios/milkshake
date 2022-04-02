@@ -18,7 +18,7 @@ export class CommandEvent extends Listener<typeof Events.PreCommandRun> {
 		});
 
 		if (!savedGuild) {
-			const msg = await replyLocalized(message, 'listeners/pre-command-run:SETTING_GUILD');
+			const msg = await replyLocalized(message, 'listeners/command/pre-command-run:SETTING_GUILD');
 
 			const defaultLanguage = this.container.config.client.defaultLanguage;
 			const defaultPrefix = this.container.config.client.defaultPrefix;

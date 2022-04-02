@@ -11,11 +11,11 @@ export class CoreCommand extends Command {
 	async messageRun(message: Message) {
 		const loadingMsg = await Utils.sendLoadingMessage(message);
 		const embedTexts = {
-			description: await resolveKey(message, 'commands/info:EMBED.DESCRIPTION'),
+			description: await resolveKey(message, 'commands/core/info:EMBED.DESCRIPTION'),
 			fields: {
 				0: {
-					name: await resolveKey(message, 'commands/info:EMBED.FIELDS.0.NAME'),
-					value: await resolveKey(message, 'commands/info:EMBED.FIELDS.0.VALUE', { addTheBot: 'https://proxitystudios.tk' })
+					name: await resolveKey(message, 'commands/core/info:EMBED.FIELDS.0.NAME'),
+					value: await resolveKey(message, 'commands/core/info:EMBED.FIELDS.0.VALUE', { addTheBot: 'https://proxitystudios.tk' })
 				}
 			}
 		};

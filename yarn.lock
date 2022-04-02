@@ -300,12 +300,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/glob@npm:^7":
+  version: 7.2.0
+  resolution: "@types/glob@npm:7.2.0"
+  dependencies:
+    "@types/minimatch": "*"
+    "@types/node": "*"
+  checksum: 6ae717fedfdfdad25f3d5a568323926c64f52ef35897bcac8aca8e19bc50c0bd84630bbd063e5d52078b2137d8e7d3c26eabebd1a2f03ff350fff8a91e79fc19
+  languageName: node
+  linkType: hard
+
 "@types/i18next-fs-backend@npm:^1.1.2":
   version: 1.1.2
   resolution: "@types/i18next-fs-backend@npm:1.1.2"
   dependencies:
     i18next: ^21.0.1
   checksum: 567ab61f65231490b272d15311e7eb127cb069743284d3e0527e7cc75671038dcb70feb5da9964b218a3bb28435365179c18bab721c94ed765f28263662e6de0
+  languageName: node
+  linkType: hard
+
+"@types/minimatch@npm:*":
+  version: 3.0.5
+  resolution: "@types/minimatch@npm:3.0.5"
+  checksum: c41d136f67231c3131cf1d4ca0b06687f4a322918a3a5adddc87ce90ed9dbd175a3610adee36b106ae68c0b92c637c35e02b58c8a56c424f71d30993ea220b92
   languageName: node
   linkType: hard
 
@@ -1662,12 +1679,14 @@ __metadata:
     "@sapphire/ts-config": ^3.1.8
     "@sapphire/type": ^2.1.2
     "@sapphire/utilities": ^3.2.1
+    "@types/glob": ^7
     "@types/node": ^17.0.10
     "@types/ws": ^8.2.2
     colorette: ^2.0.16
     discord.js: ^13.6.0
     dotenv-cra: ^3.0.2
     get-all-files: ^4.1.0
+    glob: ^7.2.0
     mysql2: ^2.3.3
     npm-run-all: ^4.1.5
     prettier: ^2.5.1

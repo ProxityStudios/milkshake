@@ -43,6 +43,9 @@ export interface AppConfig {
 		staffIDs: Snowflake[];
 		defaultPrefix: string;
 		defaultLanguage: Language;
+		i18n: {
+			defaultLanguageDirectory: string;
+		};
 	};
 	dataSources: {
 		app: DataSourceOptions;

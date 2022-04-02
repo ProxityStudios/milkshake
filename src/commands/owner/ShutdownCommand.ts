@@ -10,7 +10,7 @@ import { Types } from '../../lib';
 })
 export class OwnerCommand extends Command {
 	async messageRun(message: Message) {
-		await sendLocalized(message, 'commands/shutdown:SUCCESS');
+		await sendLocalized(message, 'commands/owner/shutdown:SUCCESS');
 		return void this.container.client.destroy();
 	}
 }
