@@ -1,7 +1,8 @@
 // TODO: configure in json file
 
 export enum Core {
-	Ping = 'ping'
+	Ping = 'ping',
+	Info = 'info'
 }
 
 export enum Owner {
