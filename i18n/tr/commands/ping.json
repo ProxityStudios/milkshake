@@ -1,0 +1,4 @@
+{
+	"PINGING": "Kontrol ediliyor...",
+	"SUCCESS": "Kontrol edildi!. Bot Gecikmesi: `{{botLatency}}ms`. API Gecikmesi `{{apiLatency}}ms`"
+}
