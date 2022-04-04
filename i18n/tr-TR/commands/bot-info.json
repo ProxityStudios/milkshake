@@ -1,14 +1,14 @@
 {
 	"EMBED": {
-		"DESCRIPTION": "Some info of the bot shown below.",
+		"DESCRIPTION": "Botun bazı bilgileri aşağıda gösteriliyor.",
 		"FIELDS": {
 			"0": {
 				"NAME": "Client",
-				"VALUE": "Total Users: **{{totalUserCount}}** \nGuilds: **{{cachedGuildCount}}/{{totalGuildCount}}** *(cached/total)*"
+				"VALUE": "Toplam Kullanıcı: **{{totalUserCount}}**\nSunucular: **{{cachedGuildCount}}/{{totalGuildCount}}** *(önbelleklenmiş/toplam)*"
 			}
 		},
 		"FOOTER": {
-			"TEXT": "Current Version: {{appVersion}}"
+			"TEXT": "Şuan ki Sürüm: {{appVersion}}"
 		}
 	}
 }
