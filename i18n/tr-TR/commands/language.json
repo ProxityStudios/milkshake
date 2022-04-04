@@ -2,6 +2,6 @@
 	"CURRENT": "Language set to **{{guildLanguage}}**",
 	"SET": {
 		"SUCCESS": "Language have been setted to **{{guildLanguage}}**!",
-		"MISSING_ARGUMENT": "Please provide a value."
+		"INVALID_LANG": "You have provided an invalid language."
 	}
 }
