@@ -1,10 +1,9 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Events, ListenerOptions } from '@sapphire/framework';
+import { Events, ListenerOptions, container } from '@sapphire/framework';
 import { Listener, Store } from '@sapphire/framework';
 import { blue, gray, yellow } from 'colorette';
-import { Utils } from '../lib';
 
-const APP_MODE = Utils.envParseString('NODE_ENV', 'development');
+const APP_MODE = container.utils.envParseString('NODE_ENV', 'development');
 
 @ApplyOptions<ListenerOptions>({
 	event: Events.ClientReady,

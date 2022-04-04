@@ -2,9 +2,9 @@ import { container } from '@sapphire/framework';
 import { gray, green } from 'colorette';
 import { DataSource } from 'typeorm';
 import type { Types } from '..';
-import { BaseService } from '../structures/BaseService';
+import BaseService from '../structures/BaseService';
 
-export class Database extends BaseService {
+export default class Database extends BaseService {
 	dataSources: Types.Database.DataSources = {
 		app: new DataSource(container.config.dataSources.app)
 	};

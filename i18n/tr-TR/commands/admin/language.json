@@ -1,7 +1,6 @@
 {
-	"CURRENT": "Language set to **{{guildLanguage}}**",
+	"CURRENT": "Dil **{{guildLanguage}}** olarak ayarlı.",
 	"SET": {
-		"SUCCESS": "Language have been setted to **{{guildLanguage}}**!",
-		"MISSING_ARGUMENT": "Please provide a value."
+		"SUCCESS": "Dil **{{guildLanguage}}** olarak ayarlandı!"
 	}
 }

@@ -1,3 +1,4 @@
 {
-	"DONE": "Successfully done!"
+	"DONE": "Başarıyla tamamlandı!",
+	"MISSING_ARGUMENT": "Lütfen bir değer girin: `{{argument}}`"
 }

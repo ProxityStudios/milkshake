@@ -2,14 +2,14 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
 import { Message, MessageEmbed, MessageEmbedOptions } from 'discord.js';
-import { Types, Utils } from '../../lib';
+import { Types } from '../../lib';
 
 @ApplyOptions<CommandOptions>({
 	name: Types.Commands.Core.Info
 })
 export class CoreCommand extends Command {
 	async messageRun(message: Message) {
-		const loadingMsg = await Utils.sendLoadingMessage(message);
+		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
 		const embedTexts = {
 			description: await resolveKey(message, 'commands/core/info:EMBED.DESCRIPTION'),
 			fields: {

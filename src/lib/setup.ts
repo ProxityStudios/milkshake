@@ -1,4 +1,10 @@
-process.env.NODE_ENV ??= 'development';
+import { Config } from '../config';
+
+if (Config.dev) {
+	process.env.NODE_ENV ??= 'development';
+} else {
+	process.env.NODE_ENV ??= 'production';
+}
 
 import 'reflect-metadata';
 import '@sapphire/plugin-logger/register';
@@ -12,6 +18,8 @@ import { inspect } from 'util';
 import { Constants } from '.';
 import { config } from 'dotenv-cra';
 
-config({ path: join(Constants.srcDir, '.env') });
+const env = Config.dev ? '.env.dev' : '.env';
+
+config({ path: join(Constants.rootDir, env) });
 inspect.defaultOptions.depth = 1;
 colorette.createColors({ useColor: true });

@@ -2,7 +2,8 @@ import type { Snowflake } from 'discord.js';
 import type { DataSourceOptions } from 'typeorm';
 import type * as Service from './service';
 import * as Preconditions from './preconditions';
-import type { BaseService } from '../structures/BaseService';
+import type BaseService from '../structures/BaseService';
+import type { Utils } from '..';
 
 export * as Preconditions from './preconditions';
 export * as Service from './service';
@@ -13,6 +14,7 @@ declare module '@sapphire/pieces' {
 	interface Container {
 		config: AppConfig;
 		services: ExtendedMap<Service.Name, BaseService>;
+		utils: typeof Utils;
 	}
 }
 
@@ -38,6 +40,7 @@ export type Language = 'en-US' | 'tr-TR' | 'uk-UA';
 
 export interface AppConfig {
 	version: string;
+	dev: boolean;
 	client: {
 		ownerIDs: Snowflake[];
 		staffIDs: Snowflake[];

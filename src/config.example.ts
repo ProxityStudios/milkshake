@@ -1,9 +1,10 @@
 import { resolve } from 'path';
-import { Types, Utils } from './lib';
-import { appEntities } from './lib/entities';
+import { Types, Utils, appEntities } from './lib';
 
 export const Config: Types.AppConfig = {
 	version: process.env.npm_package_version!,
+	// development mode
+	dev: false,
 	client: {
 		ownerIDs: ['748366237788012695'],
 		staffIDs: [],

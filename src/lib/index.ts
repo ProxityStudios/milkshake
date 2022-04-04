@@ -1,6 +1,11 @@
 export * as Utils from './utils';
 export * as Types from './types';
-export * as Structures from './structures';
 export * as Constants from './constants';
 export * as Setup from './setup';
-export * as Entities from './entities';
+
+export { default as DatabaseService } from './services/Database';
+
+export { default as BaseClient } from './structures/BaseClient';
+
+export { default as AppGuildEntity } from './entities/app/Guild';
+export * from './entities/entities';

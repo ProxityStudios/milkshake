@@ -4,7 +4,7 @@ import type { Types } from '../..';
 @Entity({
 	name: 'guilds'
 })
-export class Guild {
+export default class Guild {
 	@PrimaryColumn()
 	id: string;
 

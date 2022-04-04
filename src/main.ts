@@ -1,14 +1,12 @@
 import './lib/setup';
 
 import { container, LogLevel } from '@sapphire/framework';
-import { BaseClient } from './lib/structures';
 import { gray, green } from 'colorette';
 import { Intents } from 'discord.js';
-import { Config } from './config';
-import { Types, Utils } from './lib';
-import type { Database } from './lib/services/Database';
-import { Guild } from './lib/entities/app/Guild';
 import glob from 'glob';
+
+import { Config } from './config';
+import { AppGuildEntity, BaseClient, DatabaseService, Types, Utils } from './lib';
 
 const APP_MODE = Utils.envParseString('NODE_ENV', 'development');
 
@@ -29,10 +27,10 @@ const client = new BaseClient({
 	defaultPrefix: Config.client.defaultPrefix,
 	i18n: {
 		hmr: {
-			enabled: true
+			enabled: Config.dev ? true : false
 		},
 		i18next: {
-			debug: true,
+			debug: Config.dev ? true : false,
 			ns: glob.sync(`${Config.client.i18n.defaultLanguageDirectory}/${Config.client.defaultLanguage}/**/*.json`).map((file) => {
 				const ns = file.split('/').slice(-3);
 
@@ -53,8 +51,8 @@ const client = new BaseClient({
 
 			if (!context.guild) return defaultLanguage;
 
-			const appDataManager = container.services.get<Database>('DATABASE').dataSources.app.manager;
-			const savedGuild = await appDataManager.findOneBy(Guild, { id: context.guild.id });
+			const appDataManager = container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
+			const savedGuild = await appDataManager.findOneBy(AppGuildEntity, { id: context.guild.id });
 
 			if (!savedGuild) return defaultLanguage;
 
@@ -66,8 +64,8 @@ const client = new BaseClient({
 
 		if (!message.guild) return defaultPrefix;
 
-		const appDataManager = container.services.get<Database>('DATABASE').dataSources.app.manager;
-		const savedGuild = await appDataManager.findOneBy(Guild, { id: message.guildId! });
+		const appDataManager = container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
+		const savedGuild = await appDataManager.findOneBy(AppGuildEntity, { id: message.guild.id });
 
 		if (!savedGuild) return defaultPrefix;
 
