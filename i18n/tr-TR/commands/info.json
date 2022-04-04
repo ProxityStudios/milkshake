@@ -1,10 +1,10 @@
 {
 	"EMBED": {
-		"DESCRIPTION": "TODO: Write a description.",
+		"DESCRIPTION": "TODO: Bir açıklama yaz.",
 		"FIELDS": {
 			"0": {
 				"NAME": "Client",
-				"VALUE": "[Add Me]({{addTheBot}})"
+				"VALUE": "[Beni Ekle]({{addTheBot}})"
 			}
 		}
 	}
