@@ -1,6 +1,7 @@
 import { reply } from '@sapphire/plugin-editable-commands';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
+import { Types } from '.';
 import { LoadingMessages } from './constants';
 
 // export function loadServices(folder: string, map: Types.Services): Promise<typeof map> {
@@ -96,4 +97,14 @@ export function pickRandom<T>(array: readonly T[]): T {
  */
 export function sendLoadingMessage(message: Message): Promise<typeof message> {
 	return reply(message, pickRandom(LoadingMessages));
+}
+
+export function getLanguages(): string[] {
+	const arr = Object.entries(Types.Language)
+		.map(([key]) => {
+			if (key == '0' || Number(key)) return;
+			return key;
+		})
+		.filter((key) => key);
+	return arr as string[];
 }

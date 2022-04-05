@@ -15,5 +15,5 @@ export default class Guild {
 	prefix: string;
 
 	@Column({ nullable: false })
-	language: Types.Language;
+	language: Types.LanguageStrings;
 }

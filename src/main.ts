@@ -46,7 +46,7 @@ const client = new BaseClient({
 			}
 		},
 		defaultLanguageDirectory: Config.client.i18n.defaultLanguageDirectory,
-		fetchLanguage: async (context): Promise<Types.Language> => {
+		fetchLanguage: async (context): Promise<Types.LanguageStrings> => {
 			const { defaultLanguage } = container.config.client;
 
 			if (!context.guild) return defaultLanguage;

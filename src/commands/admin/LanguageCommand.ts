@@ -3,7 +3,7 @@ import type { Args } from '@sapphire/framework';
 import { replyLocalized, resolveKey } from '@sapphire/plugin-i18next';
 import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphire/plugin-subcommands';
 import type { Message } from 'discord.js';
-import { AppGuildEntity, DatabaseService, Types } from '../../lib';
+import { AppGuildEntity, DatabaseService, Types, Utils } from '../../lib';
 
 @ApplyOptions<SubCommandPluginCommandOptions>({
 	name: Types.Commands.Admin.Language,
@@ -22,21 +22,21 @@ export class StaffCommand extends SubCommandPluginCommand {
 		if (!savedGuild) return;
 
 		const languageArg = await args.pickResult('string');
+		const langs = Utils.getLanguages();
 
 		if (languageArg.error) {
 			return loadingMsg.edit(
 				await resolveKey(message, 'common:MISSING_ARGUMENT', {
-					argument: 'en-US | tr-TR | uk-UA'
+					argument: langs.join(' | ')
 				})
 			);
 		}
 
-		// todo: auto conditions
-		if (languageArg.value !== 'en-US' && languageArg.value !== 'tr-TR' && languageArg.value !== 'uk-UA') {
+		if (!langs.includes(languageArg.value)) {
 			return loadingMsg.edit(await resolveKey(message, 'commands/admin/language:SET.INVALID_LANG'));
 		}
 
-		savedGuild.language = languageArg.value as Types.Language;
+		savedGuild.language = languageArg.value as Types.LanguageStrings;
 
 		await appDataManager.save(savedGuild);
 

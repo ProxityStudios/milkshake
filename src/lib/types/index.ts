@@ -21,7 +21,7 @@ declare module '@sapphire/pieces' {
 declare module 'discord.js' {
 	interface Client {
 		readonly defaultPrefix: string;
-		readonly defaultLanguage: Language;
+		readonly defaultLanguage: LanguageStrings;
 	}
 }
 
@@ -36,7 +36,15 @@ declare class ExtendedMap<V = any, T = any> extends Map {
 	get<K extends T>(name: V): K;
 }
 
-export type Language = 'en-US' | 'tr-TR' | 'uk-UA';
+// export type Language = 'en-US' | 'tr-TR' | 'uk-UA';
+
+export enum Language {
+	'en-US',
+	'tr-TR',
+	'uk-UA'
+}
+
+export type LanguageStrings = keyof typeof Language;
 
 export interface AppConfig {
 	version: string;
@@ -45,7 +53,7 @@ export interface AppConfig {
 		ownerIDs: Snowflake[];
 		staffIDs: Snowflake[];
 		defaultPrefix: string;
-		defaultLanguage: Language;
+		defaultLanguage: LanguageStrings;
 		i18n: {
 			defaultLanguageDirectory: string;
 		};
