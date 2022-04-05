@@ -15,5 +15,6 @@ export enum Staff {
 }
 
 export enum Admin {
-	Language = 'language'
+	Language = 'language',
+	Prefix = 'prefix'
 }

@@ -1,8 +1,8 @@
 import { reply } from '@sapphire/plugin-editable-commands';
+import { resolveKey } from '@sapphire/plugin-i18next';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
 import { Types } from '.';
-import { LoadingMessages } from './constants';
 
 // export function loadServices(folder: string, map: Types.Services): Promise<typeof map> {
 // 	const services: Types.BaseService[] = [];
@@ -91,12 +91,15 @@ export function pickRandom<T>(array: readonly T[]): T {
 	return array[Math.floor(Math.random() * length)];
 }
 
+export const getLoadingMessages = (message: Message) => resolveKey(message, 'common:LOADING_MESSAGES');
+
 /**
  * Sends a loading message to the current channel
  * @param message The message data for which to send the loading message
  */
-export function sendLoadingMessage(message: Message): Promise<typeof message> {
-	return reply(message, pickRandom(LoadingMessages));
+export async function sendLoadingMessage(message: Message): Promise<typeof message> {
+	const loadingMsg = await resolveKey(message, 'common:LOADING')
+	return reply(message, loadingMsg);
 }
 
 export function getLanguages(): string[] {

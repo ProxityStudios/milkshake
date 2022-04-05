@@ -3,10 +3,10 @@ import type { Args } from '@sapphire/framework';
 import { replyLocalized, resolveKey } from '@sapphire/plugin-i18next';
 import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphire/plugin-subcommands';
 import type { Message } from 'discord.js';
-import { AppGuildEntity, DatabaseService, Types, Utils } from '../../lib';
+import { AppGuildEntity, DatabaseService, Types } from '../../lib';
 
 @ApplyOptions<SubCommandPluginCommandOptions>({
-	name: Types.Commands.Admin.Language,
+	name: Types.Commands.Admin.Prefix,
 	requiredUserPermissions: ['ADMINISTRATOR'],
 	preconditions: ['GuildOnly'],
 	subCommands: ['set', 'reset', { input: 'show', default: true }]
@@ -21,28 +21,23 @@ export class AdminCommand extends SubCommandPluginCommand {
 
 		if (!savedGuild) return;
 
-		const languageArg = await args.pickResult('string');
-		const langs = Utils.getLanguages();
+		const prefixArg = await args.pickResult('string');
 
-		if (languageArg.error) {
+		if (prefixArg.error) {
 			return loadingMsg.edit(
 				await resolveKey(message, 'common:MISSING_ARGUMENT', {
-					argument: langs.join(' | ')
+					argument: '<prefix>'
 				})
 			);
 		}
 
-		if (!langs.includes(languageArg.value)) {
-			return loadingMsg.edit(await resolveKey(message, 'commands/admin/language:SET.INVALID_LANG'));
-		}
-
-		savedGuild.language = languageArg.value as Types.LanguageStrings;
+		savedGuild.prefix = prefixArg.value;
 
 		await appDataManager.save(savedGuild);
 
 		return loadingMsg.edit(
-			await resolveKey(message, 'commands/admin/language:SET.SUCCESS', {
-				guildLanguage: savedGuild.language
+			await resolveKey(message, 'commands/admin/prefix:SET.SUCCESS', {
+				guildPrefix: savedGuild.prefix
 			})
 		);
 	}
@@ -54,6 +49,7 @@ export class AdminCommand extends SubCommandPluginCommand {
 	async show(message: Message) {
 		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
 		const appDataManager = this.container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
+
 		const savedGuild = await appDataManager.findOneBy(AppGuildEntity, {
 			id: message.guild?.id
 		});
@@ -61,8 +57,8 @@ export class AdminCommand extends SubCommandPluginCommand {
 		if (!savedGuild) return;
 
 		return loadingMsg.edit({
-			content: await resolveKey(message, 'commands/admin/language:CURRENT', {
-				guildLanguage: savedGuild.language
+			content: await resolveKey(message, 'commands/admin/prefix:CURRENT', {
+				guildPrefix: savedGuild?.prefix
 			})
 		});
 	}
