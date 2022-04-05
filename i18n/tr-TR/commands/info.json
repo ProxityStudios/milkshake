@@ -1,0 +1,11 @@
+{
+	"EMBED": {
+		"DESCRIPTION": "TODO: Bir açıklama yaz.",
+		"FIELDS": {
+			"0": {
+				"NAME": "Client",
+				"VALUE": "[Beni Ekle]({{addTheBot}})"
+			}
+		}
+	}
+}
