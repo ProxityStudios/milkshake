@@ -1,5 +1,14 @@
 {
 	"DONE": "Başarıyla tamamlandı!",
-	"LOADING": "Biraz zamana ihtiyacım var...",
-	"MISSING_ARGUMENT": "Lütfen bir değer girin: `{{argument}}`"
+	"LOADING_MESSAGES": [
+		"Computing...",
+		"Loading...",
+		"One sec..."
+	],
+	"MISSING_ARGUMENT": "Lütfen bir değer girin: `{{argument}}`",
+	"CURRENT_PREFIX": "My prefix in this guild is: `{{guildPrefix}}`",
+	"CATEGORIES": {
+		"ADMIN": "Admin",
+		"CORE": "Core"
+	}
 }

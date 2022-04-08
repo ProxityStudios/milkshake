@@ -1,10 +1,10 @@
 {
-	"CURRENT": "Language set to `{{guildLanguage}}`",
+	"CURRENT": "Language set to `{{guildLanguage}}`.",
 	"RESET": {
-		"SUCCESS": "Language have been reseted to `{{guildLanguage}}`!"
+		"SUCCESS": "Language have been reseted to `{{guildLanguage}}`."
 	},
 	"SET": {
-		"SUCCESS": "Language have been setted to `{{guildLanguage}}`!",
+		"SUCCESS": "Language have been setted to `{{guildLanguage}}`.",
 		"INVALID_LANG": "You have provided an invalid language."
 	}
 }
