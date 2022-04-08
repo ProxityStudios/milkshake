@@ -1,4 +1,11 @@
 {
-	"PINGING": "Pinging...",
-	"SUCCESS": "Pong! Bot Latency `{{botLatency}}ms`. API Latency `{{apiLatency}}ms`"
+	"EMBED": {
+		"DESCRIPTION": "TODO: Write a description.",
+		"FIELDS": {
+			"0": {
+				"NAME": "Client",
+				"VALUE": "[Add Me]({{addTheBot}})"
+			}
+		}
+	}
 }
