@@ -1,10 +1,26 @@
-base_path: /
+base_path: /i18n
 files:
-  - source: /i18n/en-US/*.json
-    translation: /i18n/%locale%/%original_file_name%
-  - source: /i18n/en-US/commands/**/*.json
-    translation: /%locale%/%original_path%/%original_file_name%
-  - source: /i18n/en-US/listeners/**/*.json
-    translation: /%locale%/%original_path%/%original_file_name%
-  - source: /i18n/en-US/preconditions/**/*.json
-    translation: /%locale%/%original_path%/%original_file_name%
+  - source: /en-US/*.json
+    translation: /%locale%/%original_file_name%
+
+    # commands
+  - source: /en-US/commands/admin/*.json
+    translation: /%locale%/commands/admin/%original_file_name%
+  - source: /en-US/commands/core/*.json
+    translation: /%locale%/commands/core/%original_file_name%
+  - source: /en-US/commands/owner/*.json
+    translation: /%locale%/commands/owner/%original_file_name%
+  - source: /en-US/commands/staff/*.json
+    translation: /%locale%/commands/staff/%original_file_name%
+
+    # listeners
+  - source: /en-US/listeners/command/*.json
+    translation: /%locale%/listeners/command/%original_file_name%
+  - source: /en-US/listeners/*.json
+    translation: /%locale%/listeners/%original_file_name%
+
+    # preconditions
+  - source: /en-US/preconditions/owner/*.json
+    translation: /%locale%/preconditions/owner/%original_file_name%
+  - source: /en-US/preconditions/owner/*.json
+    translation: /%locale%/preconditions/owner/%original_file_name%
