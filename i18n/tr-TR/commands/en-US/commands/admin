@@ -1,7 +1,6 @@
 {
-	"CURRENT": "Language set to **{{guildLanguage}}**",
+	"CURRENT": "Prefix set to `{{guildPrefix}}`",
 	"SET": {
-		"SUCCESS": "Language have been setted to **{{guildLanguage}}**!",
-		"INVALID_LANG": "You have provided an invalid language."
+		"SUCCESS": "Prefix have been setted to `{{guildPrefix}}`!"
 	}
 }
