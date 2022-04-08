@@ -25,7 +25,7 @@ export class AdminCommand extends SubCommandPluginCommand {
 
 		if (prefixArg.error) {
 			return loadingMsg.edit(
-				await resolveKey(message, 'common:MISSING_ARGUMENT', {
+				await resolveKey(message, 'MISSING_ARGUMENT', {
 					argument: '<prefix>'
 				})
 			);
@@ -43,7 +43,7 @@ export class AdminCommand extends SubCommandPluginCommand {
 	}
 
 	reset(message: Message) {
-		return replyLocalized(message, 'common:DONE');
+		return replyLocalized(message, 'DONE');
 	}
 
 	async show(message: Message) {

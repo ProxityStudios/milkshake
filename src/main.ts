@@ -31,6 +31,8 @@ const client = new BaseClient({
 		},
 		i18next: {
 			debug: Config.dev,
+			fallbackNS: 'common',
+			defaultNS: 'common',
 			ns: glob.sync(`${Config.client.i18n.defaultLanguageDirectory}/${Config.client.defaultLanguage}/**/*.json`).map((file) => {
 				const ns = file.split('/').slice(-3);
 

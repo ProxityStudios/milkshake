@@ -50,6 +50,6 @@ export class StaffCommand extends Command {
 
 		const embed = new MessageEmbed(embedData);
 
-		return loadingMsg.edit({ content: await resolveKey(message, 'common:DONE'), embeds: [embed] });
+		return loadingMsg.edit({ content: await resolveKey(message, 'DONE'), embeds: [embed] });
 	}
 }

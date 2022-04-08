@@ -18,7 +18,7 @@ import { inspect } from 'util';
 import { Constants } from '.';
 import { config } from 'dotenv-cra';
 
-const env = Config.dev ? '.env.dev' : '.env';
+const env = Config.dev ? '.env.development' : '.env';
 
 config({ path: join(Constants.rootDir, env) });
 inspect.defaultOptions.depth = 1;
