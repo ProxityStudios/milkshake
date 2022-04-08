@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args } from '@sapphire/framework';
-import { replyLocalized, resolveKey } from '@sapphire/plugin-i18next';
+import { resolveKey } from '@sapphire/plugin-i18next';
 import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphire/plugin-subcommands';
 import type { Message } from 'discord.js';
 import { AppGuildEntity, DatabaseService, Types, Utils } from '../../lib';
@@ -38,17 +38,33 @@ export class AdminCommand extends SubCommandPluginCommand {
 
 		savedGuild.language = languageArg.value as Types.LanguageStrings;
 
-		await appDataManager.save(savedGuild);
+		const updatedGuild = await appDataManager.save(savedGuild);
 
 		return loadingMsg.edit(
 			await resolveKey(message, 'commands/admin/language:SET.SUCCESS', {
-				guildLanguage: savedGuild.language
+				guildLanguage: updatedGuild.language
 			})
 		);
 	}
 
-	reset(message: Message) {
-		return replyLocalized(message, 'DONE');
+	async reset(message: Message) {
+		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
+		const appDataManager = this.container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
+		const savedGuild = await appDataManager.findOneBy(AppGuildEntity, {
+			id: message.guild?.id
+		});
+
+		if (!savedGuild) return;
+
+		savedGuild.language = this.container.config.client.defaultLanguage;
+
+		const updatedGuild = await appDataManager.save(savedGuild);
+
+		return loadingMsg.edit(
+			await resolveKey(message, 'commands/admin/language:RESET.SUCCESS', {
+				guildLanguage: updatedGuild.language
+			})
+		);
 	}
 
 	async show(message: Message) {
