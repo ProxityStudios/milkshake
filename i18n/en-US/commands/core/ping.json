@@ -1,4 +1,4 @@
 {
 	"PINGING": "Pinging...",
-	"SUCCESS": "Pong! Bot Latency `{{botLatency}}ms`. API Latency `{{apiLatency}}ms`"
+	"SUCCESS": "Pong! Bot Latency `{{botLatency}}ms`. API Latency `{{apiLatency}}ms`."
 }

@@ -1,12 +1,13 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
-import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphire/plugin-subcommands';
+import { SubCommandPluginCommand } from '@sapphire/plugin-subcommands';
 import type { Message } from 'discord.js';
 import { AppGuildEntity, DatabaseService, Types } from '../../lib';
 
-@ApplyOptions<SubCommandPluginCommandOptions>({
+@ApplyOptions<SubCommandPluginCommand.Options>({
 	name: Types.Commands.Admin.Prefix,
+	fullCategory: [Types.Commands.Category.Admin],
 	requiredUserPermissions: ['ADMINISTRATOR'],
 	preconditions: ['GuildOnly'],
 	subCommands: ['set', 'reset', { input: 'show', default: true }]

@@ -1,11 +1,12 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Command, CommandOptions } from '@sapphire/framework';
+import { Command } from '@sapphire/framework';
 import { editLocalized, replyLocalized } from '@sapphire/plugin-i18next';
 import type { Message } from 'discord.js';
 import { Types } from '../../lib';
 
-@ApplyOptions<CommandOptions>({
-	name: Types.Commands.Core.Ping
+@ApplyOptions<Command.Options>({
+	name: Types.Commands.Core.Ping,
+	fullCategory: [Types.Commands.Category.Core]
 })
 export class CoreCommand extends Command {
 	async messageRun(message: Message) {

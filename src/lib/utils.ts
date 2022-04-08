@@ -1,4 +1,5 @@
-import { replyLocalized } from '@sapphire/plugin-i18next';
+import type { CommandStore } from '@sapphire/framework';
+import { replyLocalized, resolveKey } from '@sapphire/plugin-i18next';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
 import { Types } from '.';
@@ -95,7 +96,7 @@ export function pickRandom<T>(array: readonly T[]): T {
  * @param message The message data for which to send the loading message
  */
 export async function sendLoadingMessage(message: Message): Promise<typeof message> {
-	return replyLocalized(message, 'common:LOADING');
+	return replyLocalized(message, pickRandom(await resolveKey(message, 'LOADING_MESSAGES')));
 }
 
 export function getLanguages(): string[] {
@@ -106,4 +107,8 @@ export function getLanguages(): string[] {
 		})
 		.filter((key) => key);
 	return arr as string[];
+}
+
+export function getCommandsByCategory(store: CommandStore, category: Types.Commands.Category): string[] {
+	return store.filter((c) => c.category === category).map((c) => c.name);
 }

@@ -1,9 +1,9 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Precondition, PreconditionOptions } from '@sapphire/framework';
+import { Precondition } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 import { Types } from '../../lib';
 
-@ApplyOptions<PreconditionOptions>({
+@ApplyOptions<Precondition.Options>({
 	name: Types.Preconditions.Staff.StaffOnly
 })
 export class UserPrecondition extends Precondition {

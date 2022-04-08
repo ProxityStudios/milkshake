@@ -1,16 +1,15 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { CommandDeniedPayload, Events, ListenerOptions } from '@sapphire/framework';
+import { CommandDeniedPayload, Events } from '@sapphire/framework';
 import { Listener, UserError } from '@sapphire/framework';
+import { reply } from '@sapphire/plugin-editable-commands';
 
-@ApplyOptions<ListenerOptions>({
+@ApplyOptions<Listener.Options>({
 	event: Events.CommandDenied
 })
 export class CommandEvent extends Listener<typeof Events.CommandDenied> {
 	async run({ context, message: content }: UserError, { message }: CommandDeniedPayload) {
-		// `context: { silent: true }` should make UserError silent:
-		// Use cases for this are for example permissions error when running the `eval` command.
 		if (Reflect.get(Object(context), 'silent')) return;
 
-		return message.channel.send({ content, allowedMentions: { users: [message.author.id], roles: [] } });
+		return reply(message, { content, allowedMentions: { users: [message.author.id], roles: [] } });
 	}
 }

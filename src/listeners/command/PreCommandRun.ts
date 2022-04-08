@@ -1,10 +1,10 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Events, ListenerOptions, PreCommandRunPayload } from '@sapphire/framework';
+import { Events, PreCommandRunPayload } from '@sapphire/framework';
 import { Listener } from '@sapphire/framework';
 import { replyLocalized } from '@sapphire/plugin-i18next';
 import { AppGuildEntity, DatabaseService } from '../../lib';
 
-@ApplyOptions<ListenerOptions>({
+@ApplyOptions<Listener.Options>({
 	event: Events.PreCommandRun
 })
 export class CommandEvent extends Listener<typeof Events.PreCommandRun> {

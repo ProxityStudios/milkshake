@@ -1,11 +1,11 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import type { CommandSuccessPayload, ListenerOptions } from '@sapphire/framework';
+import type { CommandSuccessPayload } from '@sapphire/framework';
 import { Command, Events, Listener, LogLevel } from '@sapphire/framework';
 import type { Logger } from '@sapphire/plugin-logger';
 import { cyan } from 'colorette';
 import type { Guild, User } from 'discord.js';
 
-@ApplyOptions<ListenerOptions>({
+@ApplyOptions<Listener.Options>({
 	event: Events.CommandSuccess
 })
 export class CommandEvent extends Listener<typeof Events.CommandSuccess> {

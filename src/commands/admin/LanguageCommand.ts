@@ -1,12 +1,13 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import type { Args } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
-import { SubCommandPluginCommand, SubCommandPluginCommandOptions } from '@sapphire/plugin-subcommands';
+import { SubCommandPluginCommand } from '@sapphire/plugin-subcommands';
 import type { Message } from 'discord.js';
-import { AppGuildEntity, DatabaseService, Types, Utils } from '../../lib';
+import { AppGuildEntity, DatabaseService, Types } from '../../lib';
 
-@ApplyOptions<SubCommandPluginCommandOptions>({
+@ApplyOptions<SubCommandPluginCommand.Options>({
 	name: Types.Commands.Admin.Language,
+	fullCategory: [Types.Commands.Category.Admin],
 	requiredUserPermissions: ['ADMINISTRATOR'],
 	preconditions: ['GuildOnly'],
 	subCommands: ['set', 'reset', { input: 'show', default: true }]
@@ -22,7 +23,7 @@ export class AdminCommand extends SubCommandPluginCommand {
 		if (!savedGuild) return;
 
 		const languageArg = await args.pickResult('string');
-		const langs = Utils.getLanguages();
+		const langs = this.container.utils.getLanguages();
 
 		if (languageArg.error) {
 			return loadingMsg.edit(

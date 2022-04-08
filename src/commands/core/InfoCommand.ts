@@ -1,11 +1,12 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Command, CommandOptions } from '@sapphire/framework';
+import { Command } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
 import { Message, MessageEmbed, MessageEmbedOptions } from 'discord.js';
 import { Types } from '../../lib';
 
-@ApplyOptions<CommandOptions>({
-	name: Types.Commands.Core.Info
+@ApplyOptions<Command.Options>({
+	name: Types.Commands.Core.Info,
+	fullCategory: [Types.Commands.Category.Core]
 })
 export class CoreCommand extends Command {
 	async messageRun(message: Message) {
@@ -34,7 +35,7 @@ export class CoreCommand extends Command {
 			},
 			timestamp: new Date(),
 			thumbnail: {
-				url: message.client.user?.avatarURL({ size: 64 }) ?? ''
+				url: message.client.user?.displayAvatarURL({ size: 64 })
 			}
 		};
 

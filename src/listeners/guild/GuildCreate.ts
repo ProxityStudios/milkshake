@@ -1,10 +1,10 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Events, ListenerOptions } from '@sapphire/framework';
+import { Events } from '@sapphire/framework';
 import { Listener } from '@sapphire/framework';
 import type { Guild } from 'discord.js';
 import { AppGuildEntity, DatabaseService } from '../../lib';
 
-@ApplyOptions<ListenerOptions>({
+@ApplyOptions<Listener.Options>({
 	event: Events.GuildCreate
 })
 export class GuildEvent extends Listener<typeof Events.GuildCreate> {

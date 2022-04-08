@@ -9,7 +9,7 @@ export const Config: Types.AppConfig = {
 		ownerIDs: ['748366237788012695'],
 		staffIDs: [],
 		defaultPrefix: '?',
-		defaultLanguage: "en-US",
+		defaultLanguage: 'en-US',
 		i18n: {
 			defaultLanguageDirectory: resolve('i18n')
 		}

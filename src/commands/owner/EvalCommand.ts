@@ -1,5 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Args, Command, CommandOptions } from '@sapphire/framework';
+import { Args, Command } from '@sapphire/framework';
 import { reply } from '@sapphire/plugin-editable-commands';
 import { Type } from '@sapphire/type';
 import { codeBlock, isThenable } from '@sapphire/utilities';
@@ -7,8 +7,9 @@ import type { Message } from 'discord.js';
 import { inspect } from 'util';
 import { Types } from '../../lib';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<Command.Options>({
 	name: Types.Commands.Owner.Eval,
+	fullCategory: [Types.Commands.Category.Owner],
 	preconditions: [Types.Preconditions.Owner.OwnerOnly],
 	flags: ['async', 'hidden', 'showHidden', 'silent', 's'],
 	options: ['depth']
