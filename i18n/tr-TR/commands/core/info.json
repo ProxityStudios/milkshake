@@ -1,10 +1,10 @@
 {
 	"EMBED": {
-		"DESCRIPTION": "TODO: Write a description.",
+		"DESCRIPTION": "Some info of the bot shown below.",
 		"FIELDS": {
 			"0": {
 				"NAME": "Client",
-				"VALUE": "[Add Me]({{addTheBot}})"
+				"VALUE": "[Beni Ekle]({{addTheBot}})"
 			}
 		}
 	}
