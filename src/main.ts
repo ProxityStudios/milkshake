@@ -27,10 +27,10 @@ const client = new BaseClient({
 	defaultPrefix: Config.client.defaultPrefix,
 	i18n: {
 		hmr: {
-			enabled: Config.dev ? true : false
+			enabled: Config.dev
 		},
 		i18next: {
-			debug: Config.dev ? true : false,
+			debug: Config.dev,
 			ns: glob.sync(`${Config.client.i18n.defaultLanguageDirectory}/${Config.client.defaultLanguage}/**/*.json`).map((file) => {
 				const ns = file.split('/').slice(-3);
 

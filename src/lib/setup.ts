@@ -1,9 +1,9 @@
 import { Config } from '../config';
 
 if (Config.dev) {
-	process.env.NODE_ENV ??= 'development';
+	process.env.NODE_ENV = 'development';
 } else {
-	process.env.NODE_ENV ??= 'production';
+	process.env.NODE_ENV = 'production';
 }
 
 import 'reflect-metadata';

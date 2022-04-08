@@ -1,5 +1,4 @@
-import { reply } from '@sapphire/plugin-editable-commands';
-import { resolveKey } from '@sapphire/plugin-i18next';
+import { replyLocalized } from '@sapphire/plugin-i18next';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
 import { Types } from '.';
@@ -73,7 +72,7 @@ export function envParseInteger(key: string, defaultValue?: number): number {
 	const value = Number(process.env[key]);
 
 	if (isNullishOrEmpty(value)) {
-		if (defaultValue === undefined) throw new Error(`[ENV] ${key} - The key must be an string, but is empty or undefined.`);
+		if (defaultValue === undefined) throw new Error(`[ENV] ${key} - The key must be an integer, but is empty or undefined.`);
 		return defaultValue;
 	}
 
@@ -91,15 +90,12 @@ export function pickRandom<T>(array: readonly T[]): T {
 	return array[Math.floor(Math.random() * length)];
 }
 
-export const getLoadingMessages = (message: Message) => resolveKey(message, 'common:LOADING_MESSAGES');
-
 /**
  * Sends a loading message to the current channel
  * @param message The message data for which to send the loading message
  */
 export async function sendLoadingMessage(message: Message): Promise<typeof message> {
-	const loadingMsg = await resolveKey(message, 'common:LOADING')
-	return reply(message, loadingMsg);
+	return replyLocalized(message, 'common:LOADING');
 }
 
 export function getLanguages(): string[] {
