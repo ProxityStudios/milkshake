@@ -9,6 +9,6 @@
 	"CURRENT_PREFIX": "My prefix in this guild is: `{{guildPrefix}}`",
 	"CATEGORIES": {
 		"ADMIN": "Yönetici",
-		"CORE": "Core"
+		"CORE": "Çekirdek"
 	}
 }
