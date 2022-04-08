@@ -1,10 +1,10 @@
 {
-	"CURRENT": "Dil `{{guildLanguage}}` olarak ayarlı.",
+	"CURRENT": "Language set to `{{guildLanguage}}`.",
 	"RESET": {
-		"SUCCESS": "Dil `{{guildLanguage}}` olarak sıfırlandı!"
+		"SUCCESS": "Language have been reseted to `{{guildLanguage}}`."
 	},
 	"SET": {
-		"SUCCESS": "Dil `{{guildLanguage}} olarak ayarlandı!`",
+		"SUCCESS": "Language have been setted to `{{guildLanguage}}`.",
 		"INVALID_LANG": "Geçersiz bir dil girdiniz."
 	}
 }
