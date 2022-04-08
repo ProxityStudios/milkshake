@@ -1,10 +1,10 @@
 base_path: /i18n
 files:
   - source: /en-US/*.json
-    translation: /%locale%/%original_file_name%
+    translation: /%locale%/%original_path%
   - source: /en-US/commands/**/*.json
-    translation: /%locale%/commands/%original_file_name%
+    translation: /%locale%/commands/%original_path%
   - source: /en-US/listeners/**/*.json
-    translation: /%locale%/listeners/%original_file_name%
+    translation: /%locale%/listeners/%original_path%
   - source: /en-US/preconditions/**/*.json
-    translation: /%locale%/preconditions/%original_file_name%
+    translation: /%locale%/preconditions/%original_path%
