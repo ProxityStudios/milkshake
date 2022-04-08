@@ -1,14 +1,14 @@
 {
 	"DONE": "Başarıyla tamamlandı!",
 	"LOADING_MESSAGES": [
-		"Computing...",
-		"Loading...",
-		"One sec..."
+		"Isleniyor...",
+		"Yükleniyor...",
+		"Bir saniye..."
 	],
 	"MISSING_ARGUMENT": "Lütfen bir değer girin: `{{argument}}`",
 	"CURRENT_PREFIX": "My prefix in this guild is: `{{guildPrefix}}`",
 	"CATEGORIES": {
-		"ADMIN": "Admin",
+		"ADMIN": "Yönetici",
 		"CORE": "Core"
 	}
 }
