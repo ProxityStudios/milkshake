@@ -1,6 +1,0 @@
-{
-	"CURRENT": "Prefix set to `{{guildPrefix}}`",
-	"SET": {
-		"SUCCESS": "Prefix have been setted to `{{guildPrefix}}`!"
-	}
-}

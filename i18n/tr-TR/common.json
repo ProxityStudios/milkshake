@@ -1,5 +1,0 @@
-{
-	"DONE": "Successfully done!",
-	"LOADING": "Computing...",
-	"MISSING_ARGUMENT": "Please provide a value: `{{argument}}`"
-}
