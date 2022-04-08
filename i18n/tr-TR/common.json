@@ -1,5 +1,5 @@
 {
 	"DONE": "Başarıyla tamamlandı!",
-	"LOADING": "Biraz zamana ihticayım var...",
+	"LOADING": "Biraz zamana ihtiyacım var...",
 	"MISSING_ARGUMENT": "Lütfen bir değer girin: `{{argument}}`"
 }
