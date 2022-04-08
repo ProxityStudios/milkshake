@@ -2,6 +2,6 @@
 	"CURRENT": "Language set to **{{guildLanguage}}**",
 	"SET": {
 		"SUCCESS": "Language have been setted to **{{guildLanguage}}**!",
-		"INVALID_LANG": "You have provided an invalid language."
+		"INVALID_LANG": "Geçersiz bir dil girdiniz."
 	}
 }
