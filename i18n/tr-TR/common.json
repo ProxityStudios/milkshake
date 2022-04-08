@@ -1,5 +1,5 @@
 {
-	"DONE": "Successfully done!",
+	"DONE": "Başarıyla tamamlandı!",
 	"LOADING": "Computing...",
 	"MISSING_ARGUMENT": "Please provide a value: `{{argument}}`"
 }
