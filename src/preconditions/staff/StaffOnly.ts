@@ -8,9 +8,9 @@ import { Types } from '../../lib';
 })
 export class UserPrecondition extends Precondition {
 	async run(message: Message) {
-		// return this.container.config.client.staffIDs.includes(message.author.id)
-		// 	? this.ok()
-		// 	: this.error({ message: await resolveKey(message, 'preconditions/staff/staff-only:ERROR') });
-		return this.container.config.client.staffIDs.includes(message.author.id) ? this.ok() : this.error();
+		 return this.container.config.client.staffIDs.includes(message.author.id)
+		 	? this.ok()
+		 	: this.error({ message: await resolveKey(message, 'preconditions/staff/staff-only:ERROR') });
+		// return this.container.config.client.staffIDs.includes(message.author.id) ? this.ok() : this.error();
 	}
 }
