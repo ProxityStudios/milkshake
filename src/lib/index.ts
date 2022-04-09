@@ -6,6 +6,7 @@ export * from './entities/entities';
 
 // services
 export { default as DatabaseService } from './services/Database';
+export { default as CacheService } from './services/Cache';
 
 // structures
 export { default as BaseClient } from './structures/BaseClient';

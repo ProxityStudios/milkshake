@@ -6,9 +6,7 @@ import { Intents } from 'discord.js';
 import glob from 'glob';
 
 import { Config } from './config';
-import { AppGuildEntity, BaseClient, DatabaseService, Types, Utils } from './lib';
-
-const APP_MODE = Utils.envParseString('NODE_ENV', 'development');
+import { AppGuildEntity, BaseClient, DatabaseService, Types } from './lib';
 
 const client = new BaseClient({
 	restTimeOffset: 0,
@@ -22,7 +20,7 @@ const client = new BaseClient({
 		delay: 3000
 	},
 	loadDefaultErrorListeners: true,
-	enableLoaderTraceLoggings: APP_MODE === 'development' ? true : false,
+	enableLoaderTraceLoggings: Config.dev,
 	typing: true,
 	defaultPrefix: Config.client.defaultPrefix,
 	i18n: {

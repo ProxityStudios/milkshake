@@ -1,1 +1,1 @@
-export type Name = 'DATABASE';
+export type Name = 'DATABASE' | 'CACHE';

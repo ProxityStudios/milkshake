@@ -1,4 +1,3 @@
-import { container } from '@sapphire/framework';
 import { gray, green } from 'colorette';
 import { DataSource } from 'typeorm';
 import type { Types } from '..';
@@ -6,7 +5,7 @@ import BaseService from '../structures/BaseService';
 
 export default class Database extends BaseService {
 	dataSources: Types.Database.DataSources = {
-		app: new DataSource(container.config.dataSources.app)
+		app: new DataSource(this.container.config.dataSources.app)
 	};
 
 	constructor() {
@@ -14,9 +13,9 @@ export default class Database extends BaseService {
 	}
 
 	async run() {
-		container.logger.info(gray('Initializing data sources...'));
+		this.container.logger.info(gray('Initializing data sources...'));
 		await this.initDataSources();
-		container.logger.info(
+		this.container.logger.info(
 			green('DataSources initialized:'),
 			Object.entries(this.dataSources)
 				.filter(([_, dataSource]: [key: string, dataSource: DataSource]) => dataSource.isInitialized)

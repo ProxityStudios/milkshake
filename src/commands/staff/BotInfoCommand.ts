@@ -2,7 +2,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
 import { Message, MessageEmbed, MessageEmbedOptions } from 'discord.js';
-import { AppGuildEntity, DatabaseService, Types } from '../../lib';
+import { CacheService, Types } from '../../lib';
 
 @ApplyOptions<Command.Options>({
 	name: Types.Commands.Staff.BotInformation,
@@ -12,7 +12,7 @@ import { AppGuildEntity, DatabaseService, Types } from '../../lib';
 export class StaffCommand extends Command {
 	async messageRun(message: Message) {
 		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
-		const appDataManager = this.container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
+		const cacheService = this.container.services.get<CacheService>('CACHE');
 
 		const embed = new MessageEmbed({
 			description: await resolveKey(message, 'commands/staff/bot-info:EMBED.DESCRIPTION'),
@@ -22,7 +22,7 @@ export class StaffCommand extends Command {
 					value: await resolveKey(message, 'commands/staff/bot-info:EMBED.FIELDS.0.VALUE', {
 						totalGuildCount: this.container.client.guilds.cache.size,
 						totalUserCount: this.container.client.users.cache.size,
-						cachedGuildCount: await appDataManager.count(AppGuildEntity)
+						cachedGuildCount: cacheService.guilds.size
 					})
 				}
 			],

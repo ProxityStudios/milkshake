@@ -3,7 +3,7 @@ import type { Args } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
 import { SubCommandPluginCommand } from '@sapphire/plugin-subcommands';
 import type { Message } from 'discord.js';
-import { AppGuildEntity, DatabaseService, Types } from '../../lib';
+import { CacheService, DatabaseService, Types } from '../../lib';
 
 @ApplyOptions<SubCommandPluginCommand.Options>({
 	name: Types.Commands.Admin.Prefix,
@@ -16,12 +16,8 @@ export class AdminCommand extends SubCommandPluginCommand {
 	async set(message: Message, args: Args) {
 		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
 		const appDataManager = this.container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
-		const savedGuild = await appDataManager.findOneBy(AppGuildEntity, {
-			id: message.guild?.id
-		});
-
-		if (!savedGuild) return;
-
+		const cacheService = this.container.services.get<CacheService>('CACHE');
+		const savedGuild = cacheService.guilds.get(message.guild!.id)!;
 		const prefixArg = await args.pickResult('string');
 
 		if (prefixArg.error) {
@@ -35,6 +31,7 @@ export class AdminCommand extends SubCommandPluginCommand {
 		savedGuild.prefix = prefixArg.value;
 
 		const updatedGuild = await appDataManager.save(savedGuild);
+		cacheService.cacheGuild(updatedGuild.id);
 
 		return loadingMsg.edit(
 			await resolveKey(message, 'commands/admin/prefix:SET.SUCCESS', {
@@ -46,15 +43,15 @@ export class AdminCommand extends SubCommandPluginCommand {
 	async reset(message: Message) {
 		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
 		const appDataManager = this.container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
-		const savedGuild = await appDataManager.findOneBy(AppGuildEntity, {
-			id: message.guild?.id
-		});
+		const cacheService = this.container.services.get<CacheService>('CACHE');
+		const savedGuild = cacheService.guilds.get(message.guild!.id)!;
 
 		if (!savedGuild) return;
 
 		savedGuild.prefix = this.container.config.client.defaultPrefix;
 
 		const updatedGuild = await appDataManager.save(savedGuild);
+		cacheService.cacheGuild(updatedGuild.id);
 
 		return loadingMsg.edit(
 			await resolveKey(message, 'commands/admin/prefix:RESET.SUCCESS', {
@@ -65,17 +62,11 @@ export class AdminCommand extends SubCommandPluginCommand {
 
 	async show(message: Message) {
 		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
-		const appDataManager = this.container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
-
-		const savedGuild = await appDataManager.findOneBy(AppGuildEntity, {
-			id: message.guild?.id
-		});
-
-		if (!savedGuild) return;
+		const cachedGuild = this.container.services.get<CacheService>('CACHE').guilds.get(message.guild!.id)!;
 
 		return loadingMsg.edit({
 			content: await resolveKey(message, 'commands/admin/prefix:CURRENT', {
-				guildPrefix: savedGuild?.prefix
+				guildPrefix: cachedGuild.prefix
 			})
 		});
 	}

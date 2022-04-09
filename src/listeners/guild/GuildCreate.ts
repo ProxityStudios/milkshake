@@ -2,7 +2,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Events } from '@sapphire/framework';
 import { Listener } from '@sapphire/framework';
 import type { Guild } from 'discord.js';
-import { AppGuildEntity, DatabaseService } from '../../lib';
+import { AppGuildEntity, CacheService, DatabaseService } from '../../lib';
 
 @ApplyOptions<Listener.Options>({
 	event: Events.GuildCreate
@@ -26,6 +26,7 @@ export class GuildEvent extends Listener<typeof Events.GuildCreate> {
 			});
 
 			await appDataManager.save(newGuild);
+			this.container.services.get<CacheService>('CACHE').cacheGuild(guild.id);
 		}
 	}
 }

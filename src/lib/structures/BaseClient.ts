@@ -1,7 +1,7 @@
 import { container, SapphireClient } from '@sapphire/framework';
 import type { ClientOptions } from 'discord.js';
 import { Config } from '../../config';
-import { Utils, DatabaseService } from '..';
+import { Utils, DatabaseService, CacheService } from '..';
 import { gray, green } from 'colorette';
 
 export default class BaseClient extends SapphireClient {
@@ -21,20 +21,47 @@ export default class BaseClient extends SapphireClient {
 	}
 
 	async run() {
-		await this.initDatabaseService();
+		await this.initServices();
 
 		this.logger.info(gray('Connecting to discord...'));
 		await this.login();
 		this.logger.info(green('Connected to discord.'));
+
+		this.logger.info(gray('CacheService: Caching saved guilds...'));
+		await this.cacheSavedGuilds();
+		this.logger.info(gray('CacheService: All saved guilds cached.'));
+
+		if (this.config.dev) {
+			this.logger.info(this.services.get<CacheService>('CACHE').guilds);
+		}
+	}
+
+	private cacheSavedGuilds(): Promise<any[]> {
+		const promises: Promise<any>[] = [];
+		const guilds = this.guilds.cache.map((g) => g);
+
+		for (const guild of guilds) {
+			promises.push(this.services.get<CacheService>('CACHE').cacheGuild(guild.id));
+		}
+
+		return Promise.all(promises);
 	}
 
 	/**
 	 * TODO: add automation to load services
 	 */
-	private initDatabaseService() {
+	private initServices(): Promise<any[]> {
+		const promises: Promise<any>[] = [];
+
 		const db = new DatabaseService();
 		container.services.set(db.name, db);
-		return db.run();
+		promises.push(db.run());
+
+		const cache = new CacheService();
+		container.services.set(cache.name, cache);
+		promises.push(cache.run());
+
+		return Promise.all(promises);
 	}
 
 	override login(token?: string): Promise<string> {
