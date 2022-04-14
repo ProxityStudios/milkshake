@@ -9,6 +9,7 @@ export default class CoreSlashCommand extends SlashCommand {
 		super(creator, {
 			name: 'ping',
 			description: 'Pinging the bot.',
+			// do it in custom slash command class
 			guildIDs: container.config.client.testerGuilds
 		});
 
