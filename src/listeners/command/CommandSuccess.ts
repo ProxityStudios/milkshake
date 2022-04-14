@@ -13,7 +13,7 @@ export class CommandEvent extends Listener<typeof Events.CommandSuccess> {
 		const commandName = this.command(command);
 		const author = this.author(message.author);
 		const sentAt = message.guild ? this.guild(message.guild) : this.direct();
-		this.container.logger.debug(`${shard} - ${commandName} ${author} ${sentAt}`);
+		this.container.logger.debug(`${shard} > ${commandName} ${author} ${sentAt}`);
 	}
 
 	onLoad() {

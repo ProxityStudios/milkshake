@@ -6,5 +6,5 @@ export default abstract class BaseService {
 
 	constructor(public name: Types.Service.Key) {}
 
-	abstract run(): any;
+	abstract run(): Types.AnyFunction;
 }

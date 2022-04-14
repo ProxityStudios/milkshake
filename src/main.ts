@@ -69,6 +69,10 @@ const client = new BaseClient({
 });
 
 const main = async () => {
+	if (Config.dev) {
+		client.logger.warn(client.colorette.bgRedBright('-------> STARTING IN DEVELOPMENT MODE <-------'));
+	}
+
 	try {
 		client.logger.info(bgBlackBright('Starting the client...'));
 		await client.run();

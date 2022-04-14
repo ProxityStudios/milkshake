@@ -11,7 +11,7 @@ export default class Cache extends BaseService {
 		super('cache');
 	}
 
-	async run() {
+	async run(): Promise<void> {
 		this.container.logger.info(this.container.colorette.green('CacheService: Initialized.'));
 	}
 

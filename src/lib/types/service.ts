@@ -1,5 +1,4 @@
-import type { DataSource, Repository } from 'typeorm';
-import type { AppGuildEntity, AppTesterEntity, CacheService, DatabaseService } from '..';
+import type { CacheService, DatabaseService } from '..';
 
 export interface Names {
 	database: DatabaseService;
@@ -8,15 +7,3 @@ export interface Names {
 
 export type Key = keyof Names;
 export type Value = Names[Key];
-
-export interface ServiceDBOptions {
-	sources: {
-		appDataSource: DataSource | null;
-	};
-	repos: {
-		app: {
-			guild: Repository<AppGuildEntity> | null;
-			tester: Repository<AppTesterEntity> | null;
-		};
-	};
-}

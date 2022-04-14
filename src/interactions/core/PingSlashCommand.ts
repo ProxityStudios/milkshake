@@ -1,5 +1,6 @@
 import { container } from '@sapphire/framework';
 import { CommandContext, SlashCommand } from 'slash-create';
+
 import type { BaseSlashCreator } from '../../lib';
 
 // integrate <container> to slash commands

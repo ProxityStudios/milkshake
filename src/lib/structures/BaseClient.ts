@@ -31,7 +31,7 @@ export default class BaseClient extends SapphireClient {
 		container.slashCreator = this.slashCreator;
 	}
 
-	async run() {
+	async run(): Promise<void> {
 		this.logger.info(this.colorette.gray('Initializing services...'));
 		await this.initServices();
 
@@ -56,9 +56,9 @@ export default class BaseClient extends SapphireClient {
 		);
 
 		if (this.config.dev) {
-			this.logger.info(this.slashCreator.commands.map((c) => ({ name: c.commandName, path: c.filePath })));
-			this.logger.info(this.services.get('cache').guilds);
-			this.logger.info(this.services.get('cache').testers);
+			this.logger.debug(this.slashCreator.commands.map((c) => ({ name: c.commandName, path: c.filePath })));
+			this.logger.debug(this.services.get('cache').guilds);
+			this.logger.debug(this.services.get('cache').testers);
 		}
 	}
 

@@ -76,3 +76,5 @@ export interface Config {
 		app: DataSourceOptions;
 	};
 }
+
+export type AnyFunction = any;

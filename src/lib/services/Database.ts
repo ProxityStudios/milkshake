@@ -1,25 +1,32 @@
-import { DataSource, Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { AppGuildEntity, AppTesterEntity, Types } from '..';
 import BaseService from '../structures/BaseService';
 
 export default class Database extends BaseService {
-	dataSources: Types.Database.DataSources = {
-		app: new DataSource(this.container.config.dataSources.app)
-	};
+	readonly dataSources: Types.Database.DataSources;
 
-	sources: {
-		appDataSource: DataSource;
-	};
-	repos: {
-		app: {
-			guilds: Repository<AppGuildEntity>;
-			testers: Repository<AppTesterEntity>;
-		};
-	};
+	readonly sources: Types.Database.Sources;
+	readonly repos: Types.Database.Repositories;
 
 	constructor() {
 		super('database');
+
+		// merge with <this.sources>
+		this.dataSources = {
+			app: new DataSource(this.container.config.dataSources.app)
+		};
+
+		this.sources = {
+			appDataSource: this.dataSources.app
+		};
+
+		this.repos = {
+			app: {
+				guilds: this.dataSources.app.getRepository(AppGuildEntity),
+				testers: this.dataSources.app.getRepository(AppTesterEntity)
+			}
+		};
 	}
 
 	async run() {
@@ -31,20 +38,10 @@ export default class Database extends BaseService {
 				.filter(([_, dataSource]: [key: string, dataSource: DataSource]) => dataSource.isInitialized)
 				.map((entry) => entry[0])
 		);
-
-		this.sources = {
-			appDataSource: this.dataSources.app
-		};
-		this.repos = {
-			app: {
-				guilds: this.dataSources.app.getRepository(AppGuildEntity),
-				testers: this.dataSources.app.getRepository(AppTesterEntity)
-			}
-		};
 	}
 
 	private async initDataSources() {
-		for (const [_, dataSource] of Object.entries(this.dataSources)) {
+		for await (const [_, dataSource] of Object.entries(this.dataSources)) {
 			if (dataSource instanceof DataSource) {
 				await dataSource.initialize();
 			}

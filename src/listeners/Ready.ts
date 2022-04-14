@@ -13,6 +13,7 @@ export class ClientEvent extends Listener<typeof Events.ClientReady> {
 		this.printStoreDebugInformation();
 	}
 
+	// edit for new things
 	private printStoreDebugInformation() {
 		const { client, logger } = this.container;
 		const stores = [...client.stores.values()];
