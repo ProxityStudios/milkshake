@@ -5,7 +5,7 @@
 		"Yükleniyor...",
 		"Bir saniye..."
 	],
-	"MISSING_ARGUMENTS": "Lütfen bir değer girin: `{{arguments}}`",
+	"MISSING_ARGUMENTS": "Please provide the values: `{{arguments}}`",
 	"CURRENT_PREFIX": "My prefix in this guild is: `{{guildPrefix}}`",
 	"CATEGORIES": {
 		"ADMIN": "Yönetici",
