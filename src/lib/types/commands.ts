@@ -34,7 +34,7 @@ export enum Category {
 	Owner = 'Owner'
 }
 
-export interface CommandsByCategory {
+export interface WithCategory {
 	category: Category;
 	commands: string[];
 }

@@ -14,7 +14,7 @@ export class CoreCommand extends Command {
 		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
 		const commandStore = this.container.stores.get('commands');
 
-		const commandsByCategory: Types.Commands.CommandsByCategory[] = [
+		const commandsWithCategory: Types.Commands.WithCategory[] = [
 			{
 				category: Types.Commands.Category.Admin,
 				commands: this.container.utils.getCommandsByCategory(commandStore, Types.Commands.Category.Admin)
@@ -34,14 +34,14 @@ export class CoreCommand extends Command {
 			fields: [
 				{
 					name: await resolveKey(message, 'CATEGORIES.ADMIN'),
-					value: commandsByCategory
+					value: commandsWithCategory
 						.filter((c) => c.category === Types.Commands.Category.Admin)[0]
 						.commands.map((n) => '`' + n + '`')
 						.join(', ')
 				},
 				{
 					name: await resolveKey(message, 'CATEGORIES.CORE'),
-					value: commandsByCategory
+					value: commandsWithCategory
 						.filter((c) => c.category === Types.Commands.Category.Core)[0]
 						.commands.map((n) => '`' + n + '`')
 						.join(', ')

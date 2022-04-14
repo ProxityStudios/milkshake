@@ -2,9 +2,9 @@ import type { CooldownOptions } from '@sapphire/framework';
 import type { Colorette } from 'colorette';
 import { Collection, Snowflake } from 'discord.js';
 import type { DataSourceOptions } from 'typeorm';
+
 import type { Types, Utils } from '..';
 import type BaseSlashCreator from '../structures/BaseSlashCreator';
-
 export * as Preconditions from './preconditions';
 export * as Service from './service';
 export * as Commands from './commands';
