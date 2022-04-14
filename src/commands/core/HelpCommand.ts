@@ -2,6 +2,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
 import { Message, MessageEmbed, MessageEmbedOptions } from 'discord.js';
+
 import { Types } from '../../lib';
 
 @ApplyOptions<Command.Options>({

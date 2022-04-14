@@ -12,7 +12,8 @@ export enum Owner {
 }
 
 export enum Staff {
-	BotInformation = 'bot-info'
+	BotInformation = 'bot-info',
+	Tester = 'tester'
 }
 
 export enum Admin {

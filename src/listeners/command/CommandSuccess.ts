@@ -2,7 +2,6 @@ import { ApplyOptions } from '@sapphire/decorators';
 import type { CommandSuccessPayload } from '@sapphire/framework';
 import { Command, Events, Listener, LogLevel } from '@sapphire/framework';
 import type { Logger } from '@sapphire/plugin-logger';
-import { cyan } from 'colorette';
 import type { Guild, User } from 'discord.js';
 
 @ApplyOptions<Listener.Options>({
@@ -23,22 +22,22 @@ export class CommandEvent extends Listener<typeof Events.CommandSuccess> {
 	}
 
 	private shard(id: number) {
-		return `[${cyan(id.toString())}]`;
+		return `[${this.container.colorette.cyan(id.toString())}]`;
 	}
 
 	private command(command: Command) {
-		return cyan(command.name);
+		return this.container.colorette.cyan(command.name);
 	}
 
 	private author(author: User) {
-		return `${author.username}[${cyan(author.id)}]`;
+		return `${author.username}[${this.container.colorette.cyan(author.id)}]`;
 	}
 
 	private direct() {
-		return cyan('Direct Messages');
+		return this.container.colorette.cyan('Direct Messages');
 	}
 
 	private guild(guild: Guild) {
-		return `${guild.name}[${cyan(guild.id)}]`;
+		return `${guild.name}[${this.container.colorette.cyan(guild.id)}]`;
 	}
 }

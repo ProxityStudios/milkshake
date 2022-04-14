@@ -1,2 +1,8 @@
 add caching system
 add embed generator
+add keys as constants
+disable legacy commands
+
+IN VERSION V3
+
+make all things modular.

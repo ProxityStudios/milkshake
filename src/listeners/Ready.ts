@@ -1,16 +1,13 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Events, container } from '@sapphire/framework';
+import { Events } from '@sapphire/framework';
 import { Listener, Store } from '@sapphire/framework';
-import { blue, gray, yellow } from 'colorette';
-
-const APP_MODE = container.utils.envParseString('NODE_ENV', 'development');
 
 @ApplyOptions<Listener.Options>({
 	event: Events.ClientReady,
 	once: true
 })
 export class ClientEvent extends Listener<typeof Events.ClientReady> {
-	private readonly style = APP_MODE === 'development' ? yellow : blue;
+	private readonly style = this.container.config.dev ? this.container.colorette.yellow : this.container.colorette.blue;
 
 	run() {
 		this.printStoreDebugInformation();
@@ -26,6 +23,6 @@ export class ClientEvent extends Listener<typeof Events.ClientReady> {
 	}
 
 	private styleStore(store: Store<any>, last: boolean) {
-		return gray(`${last ? '└─' : '├─'} Loaded ${this.style(store.size.toString())} ${store.name}.`);
+		return this.container.colorette.gray(`${last ? '└─' : '├─'} Loaded ${this.style(store.size.toString())} ${store.name}.`);
 	}
 }

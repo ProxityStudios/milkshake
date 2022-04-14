@@ -4,9 +4,9 @@ import { Entity, PrimaryColumn, Column } from 'typeorm';
 import type { Types } from '../..';
 
 @Entity({
-	name: 'guilds'
+	name: 'testers'
 })
-export default class Guild {
+export default class Tester {
 	@PrimaryColumn()
 	id: Snowflake;
 
@@ -14,8 +14,8 @@ export default class Guild {
 	name: string;
 
 	@Column({ nullable: false })
-	prefix: string;
+	discriminator: string;
 
-	@Column({ nullable: false })
-	language: Types.LanguageStrings;
+	@Column({ type: 'simple-array', nullable: false })
+	roles: Types.Tester.Role[];
 }

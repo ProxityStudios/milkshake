@@ -1,16 +1,26 @@
 import { container, SapphireClient } from '@sapphire/framework';
 import type { ClientOptions } from 'discord.js';
+import { join } from 'path';
+
 import { Config } from '../../config';
 import { Utils, DatabaseService, CacheService } from '..';
-import { gray, green } from 'colorette';
+import { ServiceRegistry } from '../types';
+import BaseSlashCreator from './BaseSlashCreator';
 
 export default class BaseClient extends SapphireClient {
 	readonly config: typeof container.config = Config;
+	readonly colorette = container.colorette;
 	readonly utils: typeof container.utils = Utils;
-	readonly services: typeof container.services = new Map();
-
 	readonly defaultPrefix = this.config.client.defaultPrefix;
 	readonly defaultLanguage = this.config.client.defaultLanguage;
+
+	// add to <container.store> registry
+	readonly services: typeof container.services = new ServiceRegistry();
+	readonly slashCreator: BaseSlashCreator = new BaseSlashCreator(this, {
+		applicationID: this.utils.envParseString('DISCORD_APP_ID'),
+		publicKey: this.utils.envParseString('DISCORD_APP_PUBLIC_KEY'),
+		token: this.utils.envParseString('DISCORD_APP_TOKEN')
+	});
 
 	constructor(options: ClientOptions) {
 		super(options);
@@ -18,38 +28,59 @@ export default class BaseClient extends SapphireClient {
 		container.config = this.config;
 		container.services = this.services;
 		container.utils = this.utils;
+		container.slashCreator = this.slashCreator;
 	}
 
 	async run() {
+		this.logger.info(this.colorette.gray('Initializing services...'));
 		await this.initServices();
 
-		this.logger.info(gray('Connecting to discord...'));
-		await this.login();
-		this.logger.info(green('Connected to discord.'));
-
-		this.logger.info(gray('CacheService: Caching saved guilds...'));
+		this.logger.info(this.colorette.gray('CacheService: Caching saved guilds and testers...'));
 		await this.cacheSavedGuilds();
-		this.logger.info(gray('CacheService: All saved guilds cached.'));
+		await this.cacheSavedTesters();
+		this.logger.info(this.colorette.green('CacheService: Saved testers and guilds are cached.'));
+
+		this.logger.info(this.colorette.gray('Connecting to discord...'));
+		await this.login();
+		this.logger.info(this.colorette.green('Connected to discord.'));
+
+		this.slashCreator.withClient();
+
+		this.logger.info(this.colorette.gray('SlashCreator: Registering interaction commands...'));
+
+		// add to <container.store>
+		this.slashCreator.registerCommandsInAndSync(join(__dirname, '..', '..', 'interactions'));
+		this.logger.info(
+			this.colorette.green('SlashCreator: Interactions:'),
+			this.slashCreator.commands.map((c) => c.commandName)
+		);
 
 		if (this.config.dev) {
-			this.logger.info(this.services.get<CacheService>('CACHE').guilds);
+			this.logger.info(this.slashCreator.commands.map((c) => ({ name: c.commandName, path: c.filePath })));
+			this.logger.info(this.services.get('cache').guilds);
+			this.logger.info(this.services.get('cache').testers);
 		}
 	}
 
-	private cacheSavedGuilds(): Promise<any[]> {
-		const promises: Promise<any>[] = [];
-		const guilds = this.guilds.cache.map((g) => g);
+	// make in cache service
+	private async cacheSavedGuilds(): Promise<void> {
+		const guilds = await this.services.get('database').repos.app.guilds.find();
 
-		for (const guild of guilds) {
-			promises.push(this.services.get<CacheService>('CACHE').cacheGuild(guild.id));
+		for await (const guild of guilds) {
+			this.services.get('cache').cacheGuild(guild);
 		}
-
-		return Promise.all(promises);
 	}
 
-	/**
-	 * TODO: add automation to load services
-	 */
+	// make in cache service
+	private async cacheSavedTesters(): Promise<void> {
+		const testers = await this.services.get('database').repos.app.testers.find();
+
+		for await (const tester of testers) {
+			this.services.get('cache').cacheTester(tester);
+		}
+	}
+
+	// add automation to load services
 	private initServices(): Promise<any[]> {
 		const promises: Promise<any>[] = [];
 

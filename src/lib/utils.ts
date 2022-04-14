@@ -2,6 +2,7 @@ import type { CommandStore } from '@sapphire/framework';
 import { replyLocalized, resolveKey } from '@sapphire/plugin-i18next';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
+
 import { Types } from '.';
 
 // export function loadServices(folder: string, map: Types.Services): Promise<typeof map> {
@@ -107,6 +108,16 @@ export function getLanguages(): string[] {
 		})
 		.filter((key) => key);
 	return arr as string[];
+}
+
+export function convertEnumToArray<T extends string | number>(e: Types.Enum<any>): T[] {
+	const arr: any = Object.entries(e)
+		.map(([key]) => {
+			if (key == '0' || Number(key)) return;
+			return key;
+		})
+		.filter((key) => key);
+	return arr;
 }
 
 export function getCommandsByCategory(store: CommandStore, category: Types.Commands.Category): string[] {

@@ -2,11 +2,13 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
 import type { Message } from 'discord.js';
+
 import { Types } from '../../lib';
 
 @ApplyOptions<Command.Options>({
 	name: Types.Commands.Mod.Kick,
-	fullCategory: [Types.Commands.Category.Mod]
+	fullCategory: [Types.Commands.Category.Mod],
+	preconditions: [[Types.Preconditions.Owner.OwnerOnly, Types.Preconditions.Staff.StaffOnly, Types.Preconditions.Tester.BetaTesterOnly]]
 })
 export class CoreCommand extends Command {
 	async messageRun(message: Message) {

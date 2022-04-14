@@ -2,7 +2,8 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
 import { resolveKey } from '@sapphire/plugin-i18next';
 import { Message, MessageEmbed, MessageEmbedOptions } from 'discord.js';
-import { CacheService, Types } from '../../lib';
+
+import { Types } from '../../lib';
 
 @ApplyOptions<Command.Options>({
 	name: Types.Commands.Staff.BotInformation,
@@ -10,9 +11,15 @@ import { CacheService, Types } from '../../lib';
 	preconditions: [[Types.Preconditions.Owner.OwnerOnly, Types.Preconditions.Staff.StaffOnly]]
 })
 export class StaffCommand extends Command {
+	private cache = this.container.services.get('cache');
 	async messageRun(message: Message) {
 		const loadingMsg = await this.container.utils.sendLoadingMessage(message);
-		const cacheService = this.container.services.get<CacheService>('CACHE');
+
+		const statistics = {
+			totalGuildCount: this.container.client.guilds.cache.size,
+			totalUserCount: this.container.client.users.cache.size,
+			cachedGuildCount: this.cache.guilds.size
+		};
 
 		const embed = new MessageEmbed({
 			description: await resolveKey(message, 'commands/staff/bot-info:EMBED.DESCRIPTION'),
@@ -20,9 +27,9 @@ export class StaffCommand extends Command {
 				{
 					name: await resolveKey(message, 'commands/staff/bot-info:EMBED.FIELDS.0.NAME'),
 					value: await resolveKey(message, 'commands/staff/bot-info:EMBED.FIELDS.0.VALUE', {
-						totalGuildCount: this.container.client.guilds.cache.size,
-						totalUserCount: this.container.client.users.cache.size,
-						cachedGuildCount: cacheService.guilds.size
+						totalGuildCount: statistics.totalGuildCount,
+						totalUserCount: statistics.totalUserCount,
+						cachedGuildCount: statistics.cachedGuildCount
 					})
 				}
 			],

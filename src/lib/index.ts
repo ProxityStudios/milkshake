@@ -1,4 +1,5 @@
 export * as Utils from './utils';
+export * as Keys from './keys';
 export * as Types from './types';
 export * as Constants from './constants';
 export * as Setup from './setup';
@@ -10,6 +11,8 @@ export { default as CacheService } from './services/Cache';
 
 // structures
 export { default as BaseClient } from './structures/BaseClient';
+export { default as BaseSlashCreator } from './structures/BaseSlashCreator';
 
 // entities
 export { default as AppGuildEntity } from './entities/app/Guild';
+export { default as AppTesterEntity } from './entities/app/Tester';

@@ -1,7 +1,7 @@
 {
 	"DONE": "Successfully done!",
 	"LOADING_MESSAGES": ["Computing...", "Loading...", "One sec..."],
-	"MISSING_ARGUMENT": "Please provide a value: `{{argument}}`",
+	"MISSING_ARGUMENTS": "Please provide the values: `{{arguments}}`",
 	"CURRENT_PREFIX": "My prefix in this guild is: `{{guildPrefix}}`",
 	"CATEGORIES": {
 		"ADMIN": "Admin",

@@ -1,34 +1,32 @@
 import './lib/setup';
 
 import { container, LogLevel } from '@sapphire/framework';
-import { gray, green } from 'colorette';
+import { bgBlackBright, bgGreenBright } from 'colorette';
 import { Intents } from 'discord.js';
-import glob from 'glob';
+import * as glob from 'glob';
 
 import { Config } from './config';
-import { AppGuildEntity, BaseClient, DatabaseService, Types } from './lib';
+import { BaseClient, Types } from './lib';
 
 const client = new BaseClient({
-	restTimeOffset: 0,
 	intents: new Intents([Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILDS]),
-	caseInsensitiveCommands: true,
 	logger: {
 		depth: 2,
 		level: LogLevel.Debug
 	},
-	defaultCooldown: {
-		delay: 3000
-	},
-	loadDefaultErrorListeners: true,
-	enableLoaderTraceLoggings: Config.dev,
-	typing: true,
+	restTimeOffset: 0,
+	defaultCooldown: Config.client.defaultCooldown,
 	defaultPrefix: Config.client.defaultPrefix,
+	enableLoaderTraceLoggings: Config.dev,
+	loadDefaultErrorListeners: true,
+	caseInsensitiveCommands: true,
+	typing: true,
 	i18n: {
 		hmr: {
 			enabled: Config.dev
 		},
 		i18next: {
-			debug: Config.dev,
+			debug: false,
 			fallbackNS: 'common',
 			defaultNS: 'common',
 			returnObjects: true,
@@ -52,22 +50,18 @@ const client = new BaseClient({
 
 			if (!context.guild) return defaultLanguage;
 
-			const appDataManager = container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
-			const savedGuild = await appDataManager.findOneBy(AppGuildEntity, { id: context.guild.id });
-
+			const savedGuild = await container.services.get('database').repos.app.guilds.findOneBy({ id: context.guild.id });
 			if (!savedGuild) return defaultLanguage;
 
 			return savedGuild.language;
 		}
 	},
 	fetchPrefix: async (message) => {
-		const { defaultPrefix } = container.config.client;
+		const defaultPrefix = message.client.defaultPrefix;
 
 		if (!message.guild) return defaultPrefix;
 
-		const appDataManager = container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
-		const savedGuild = await appDataManager.findOneBy(AppGuildEntity, { id: message.guild.id });
-
+		const savedGuild = await container.services.get('database').repos.app.guilds.findOneBy({ id: message.guild.id });
 		if (!savedGuild) return defaultPrefix;
 
 		return savedGuild.prefix;
@@ -76,9 +70,9 @@ const client = new BaseClient({
 
 const main = async () => {
 	try {
-		client.logger.info(gray('Starting the client...'));
+		client.logger.info(bgBlackBright('Starting the client...'));
 		await client.run();
-		client.logger.info(green('All things are done.'));
+		client.logger.info(bgGreenBright('All things are done.'));
 	} catch (e) {
 		client.logger.fatal(e);
 		void client.destroy();

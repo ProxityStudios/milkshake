@@ -5,3 +5,7 @@ export enum Owner {
 export enum Staff {
 	StaffOnly = 'StaffOnly'
 }
+
+export enum Tester {
+	BetaTesterOnly = 'BetaTesterOnly'
+}

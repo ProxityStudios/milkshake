@@ -2,7 +2,8 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Events, PreCommandRunPayload } from '@sapphire/framework';
 import { Listener } from '@sapphire/framework';
 import { replyLocalized } from '@sapphire/plugin-i18next';
-import { AppGuildEntity, CacheService, DatabaseService } from '../../lib';
+
+import { AppGuildEntity } from '../../lib';
 
 @ApplyOptions<Listener.Options>({
 	event: Events.PreCommandRun
@@ -11,8 +12,8 @@ export class CommandEvent extends Listener<typeof Events.PreCommandRun> {
 	async run({ message }: PreCommandRunPayload) {
 		if (!message.guild) return;
 
-		const appDataManager = this.container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
-		const cacheService = this.container.services.get<CacheService>('CACHE');
+		const appDataManager = this.container.services.get('database').dataSources.app.manager;
+		const cacheService = this.container.services.get('cache');
 		const savedGuild = cacheService.guilds.get(message.guild.id);
 
 		if (!savedGuild) {
@@ -28,8 +29,8 @@ export class CommandEvent extends Listener<typeof Events.PreCommandRun> {
 				language: defaultLanguage
 			});
 
-			await appDataManager.save(newGuild);
-			cacheService.cacheGuild(message.guild.id);
+			const savedGuild = await appDataManager.save(newGuild);
+			cacheService.cacheGuild(savedGuild);
 			await msg.delete();
 		}
 	}

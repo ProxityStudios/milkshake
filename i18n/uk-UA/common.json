@@ -5,7 +5,7 @@
 		"Loading...",
 		"One sec..."
 	],
-	"MISSING_ARGUMENT": "Please provide a value: `{{argument}}`",
+	"MISSING_ARGUMENTS": "Please provide a value: `{{arguments}}`",
 	"CURRENT_PREFIX": "My prefix in this guild is: `{{guildPrefix}}`",
 	"CATEGORIES": {
 		"ADMIN": "Admin",

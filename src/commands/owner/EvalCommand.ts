@@ -5,6 +5,7 @@ import { Type } from '@sapphire/type';
 import { codeBlock, isThenable } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
 import { inspect } from 'util';
+
 import { Types } from '../../lib';
 
 @ApplyOptions<Command.Options>({

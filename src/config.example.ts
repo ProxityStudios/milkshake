@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import { Types, Utils, appEntities } from './lib';
 
-export const Config: Types.AppConfig = {
+export const Config: Types.Config = {
 	version: process.env.npm_package_version!,
 	// development mode
 	dev: false,
@@ -10,6 +10,8 @@ export const Config: Types.AppConfig = {
 		staffIDs: [],
 		defaultPrefix: '?',
 		defaultLanguage: 'en-US',
+		defaultCooldown: { delay: 3000 },
+		testerGuilds: ['843939288349409331', '959964580690407475', '963893242208878632'],
 		i18n: {
 			defaultLanguageDirectory: resolve('i18n')
 		}

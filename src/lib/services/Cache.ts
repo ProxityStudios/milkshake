@@ -1,46 +1,51 @@
-import { gray } from 'colorette';
-import type { Snowflake } from 'discord.js';
-import { AppGuildEntity, DatabaseService } from '..';
+import { Collection, Snowflake } from 'discord.js';
+
+import type { AppGuildEntity, AppTesterEntity } from '..';
 import BaseService from '../structures/BaseService';
 
 export default class Cache extends BaseService {
-	guilds = new Map<Snowflake, AppGuildEntity>();
+	guilds = new Collection<Snowflake, AppGuildEntity>();
+	testers = new Collection<Snowflake, AppTesterEntity>();
 
 	constructor() {
-		super('CACHE');
+		super('cache');
 	}
 
 	async run() {
-		this.container.logger.info(gray('CacheService: Initialized.'));
+		this.container.logger.info(this.container.colorette.green('CacheService: Initialized.'));
 	}
 
-	async cacheGuild(id: Snowflake, returnIfExists: boolean = true): Promise<AppGuildEntity> {
-		const appDataSource = this.container.services.get<DatabaseService>('DATABASE').dataSources.app.manager;
-		const savedGuild = await appDataSource.findOneBy(AppGuildEntity, {
-			id
-		});
-
-		if (!savedGuild) throw gray('CacheService: Guild not found in database: ') + id;
-
-		const isCached = this.guilds.get(id);
+	cacheGuild(guild: AppGuildEntity, returnIfExists: boolean = true): AppGuildEntity {
+		const isCached = this.guilds.get(guild.id);
 
 		if (isCached && returnIfExists) {
 			return isCached;
 		}
 
-		const cachedGuild = this.guilds.set(id, savedGuild).get(id)!;
-		this.container.logger.info(gray('CacheService: Guild cached:'), id);
+		const cachedGuild = this.guilds.set(guild.id, guild).get(guild.id)!;
+		this.container.logger.info(this.container.colorette.cyan('CacheService: Guild cached:'), guild.id);
 
 		return cachedGuild;
 	}
 
 	flushCachedGuild(id: Snowflake): boolean {
-		const isCached = this.guilds.get(id);
+		return this.guilds.has(id) ?? this.guilds.delete(id);
+	}
 
-		if (isCached) {
-			return this.guilds.delete(id);
-		} else {
-			return true;
+	cacheTester(tester: AppTesterEntity, returnIfExists: boolean = true): AppTesterEntity {
+		const isCached = this.testers.get(tester.id);
+
+		if (isCached && returnIfExists) {
+			return isCached;
 		}
+
+		const cachedTester = this.testers.set(tester.id, tester).get(tester.id)!;
+		this.container.logger.info(this.container.colorette.cyan('CacheService: Tester cached:'), tester.id);
+
+		return cachedTester;
+	}
+
+	flushCachedTester(id: Snowflake): boolean {
+		return this.testers.has(id) ?? this.testers.delete(id);
 	}
 }
