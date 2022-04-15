@@ -33,15 +33,15 @@ export class CoreCommand extends Command {
 		// make it with types
 		switch (type) {
 			case 'bot':
-				this.runCommandFromTypeBot(interaction);
+				this.runCommandForTypeBot(interaction);
 				break;
 			case 'api':
-				this.runCommandFromTypeApi(interaction);
+				this.runCommandForTypeApi(interaction);
 				break;
 		}
 	}
 
-	async runCommandFromTypeBot(interaction: CommandInteraction) {
+	async runCommandForTypeBot(interaction: CommandInteraction) {
 		return interaction.reply(
 			await resolveKey(interaction.channel!, Keys.Ping.Type.Bot.Success, {
 				botLatency: Math.round(this.container.client.ws.ping)
@@ -49,7 +49,7 @@ export class CoreCommand extends Command {
 		);
 	}
 
-	async runCommandFromTypeApi(interaction: CommandInteraction) {
+	async runCommandForTypeApi(interaction: CommandInteraction) {
 		return interaction.reply(
 			await resolveKey(interaction.channel!, Keys.Ping.Type.API.Success, {
 				apiLatency: interaction.createdTimestamp - new Date().getTime()
