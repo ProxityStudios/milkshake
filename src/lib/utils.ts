@@ -2,8 +2,9 @@ import type { CommandStore } from '@sapphire/framework';
 import { replyLocalized, resolveKey } from '@sapphire/plugin-i18next';
 import { isNullishOrEmpty } from '@sapphire/utilities';
 import type { Message } from 'discord.js';
+import { join } from 'path';
 
-import { Types } from '.';
+import { Constants, Types } from '.';
 
 // export function loadServices(folder: string, map: Types.Services): Promise<typeof map> {
 // 	const services: Types.BaseService[] = [];
@@ -122,4 +123,11 @@ export function convertEnumToArray<T extends string | number>(e: Types.Enum<any>
 
 export function getCommandsByCategory(store: CommandStore, category: Types.Commands.Category): string[] {
 	return store.filter((c) => c.category === category).map((c) => c.name);
+}
+
+export async function getIDHintsOfSlashCommand(name: Types.Commands.All): Promise<string[]> {
+	const { default: idHints } = await import(join(Constants.rootDir, '.jsons/id-hints.json'));
+	const parsedIDHints = JSON.parse(JSON.stringify(idHints));
+
+	return parsedIDHints[name];
 }

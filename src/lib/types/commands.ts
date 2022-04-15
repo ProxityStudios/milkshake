@@ -38,3 +38,5 @@ export interface WithCategory {
 	category: Category;
 	commands: string[];
 }
+
+export type All = Owner | Core | Staff | Mod | Admin;

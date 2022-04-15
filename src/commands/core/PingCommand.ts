@@ -1,24 +1,16 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Command, RegisterBehavior } from '@sapphire/framework';
+import { ApplicationCommandRegistry, Command, RegisterBehavior } from '@sapphire/framework';
 import { editLocalized, replyLocalized, resolveKey } from '@sapphire/plugin-i18next';
-import type { CommandInteraction, Message, TextBasedChannel } from 'discord.js';
+import type { CommandInteraction, Message } from 'discord.js';
+import { SlashCommandBuilder } from '@discordjs/builders';
 
-import { Config } from '../../config';
-import { Keys, Types } from '../../lib';
+import { Keys, Types, Utils } from '../../lib';
 
 @ApplyOptions<Command.Options>({
 	name: Types.Commands.Core.Ping,
 	// todo
 	description: 'Ping command',
-	fullCategory: [Types.Commands.Category.Core],
-	chatInputCommand: {
-		register: true,
-		// do it in json
-		idHints: ['964521721531084881'],
-		// do it with container
-		guildIds: Config.client.testerGuilds,
-		behaviorWhenNotIdentical: RegisterBehavior.Overwrite
-	}
+	fullCategory: [Types.Commands.Category.Core]
 })
 export class CoreCommand extends Command {
 	async messageRun(message: Message) {
@@ -36,12 +28,64 @@ export class CoreCommand extends Command {
 	async chatInputRun(interaction: CommandInteraction) {
 		// parse nn: await resolveKey(interaction.channel.<as-text-channel>, <key>)
 
-		await interaction.deferReply(await resolveKey(interaction.channel as TextBasedChannel, Keys.Ping.Pinging));
-		return interaction.editReply(
-			await resolveKey(interaction.channel as TextBasedChannel, Keys.Ping.Success, {
-				botLatency: Math.round(this.container.client.ws.ping),
-				apiLatency: new Date().getTime() - interaction.createdTimestamp
+		const type = interaction.options.getString('type');
+
+		// make it with types
+		switch (type) {
+			case 'bot':
+				this.runCommandFromTypeBot(interaction);
+				break;
+			case 'api':
+				this.runCommandFromTypeApi(interaction);
+				break;
+		}
+	}
+
+	async runCommandFromTypeBot(interaction: CommandInteraction) {
+		return interaction.reply(
+			await resolveKey(interaction.channel!, Keys.Ping.Type.Bot.Success, {
+				botLatency: Math.round(this.container.client.ws.ping)
 			})
 		);
+	}
+
+	async runCommandFromTypeApi(interaction: CommandInteraction) {
+		return interaction.reply(
+			await resolveKey(interaction.channel!, Keys.Ping.Type.API.Success, {
+				apiLatency: interaction.createdTimestamp - new Date().getTime()
+			})
+		);
+	}
+
+	async registerApplicationCommands(registry: ApplicationCommandRegistry) {
+		const builder = new SlashCommandBuilder();
+
+		builder.setName(this.name);
+		builder.setDescription(this.description);
+
+		builder.addStringOption((input) =>
+			input
+				.setName('type')
+				.setDescription('Type')
+				.addChoices([
+					// make it with types
+					['Bot', 'bot'],
+					['API', 'api']
+				])
+				.setRequired(true)
+		);
+
+		const options: ApplicationCommandRegistry.RegisterOptions = {
+			behaviorWhenNotIdentical: RegisterBehavior.Overwrite,
+			registerCommandIfMissing: true,
+			idHints: await Utils.getIDHintsOfSlashCommand(Types.Commands.Core.Ping)
+			// guildIds: this.container.config.dev ? this.container.config.client.testerGuilds : []
+		};
+
+		if (this.container.config.dev) {
+			options.guildIds = this.container.config.client.testerGuilds;
+		}
+
+		registry.registerChatInputCommand(builder, options);
 	}
 }
