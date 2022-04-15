@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { Types, Utils, appEntities } from './lib';
+import { Types, Utils, appEntities, Constants } from './lib';
 
 export const Config: Types.Config = {
 	version: process.env.npm_package_version!,
@@ -13,7 +13,7 @@ export const Config: Types.Config = {
 		defaultCooldown: { delay: 3000 },
 		testerGuilds: ['843939288349409331', '959964580690407475', '963893242208878632'],
 		i18n: {
-			defaultLanguageDirectory: resolve('i18n')
+			defaultLanguageDirectory: resolve(Constants.rootDir, 'i18n')
 		}
 	},
 	dataSources: {

@@ -19,6 +19,7 @@ const client = new BaseClient({
 	defaultPrefix: Config.client.defaultPrefix,
 	enableLoaderTraceLoggings: Config.dev,
 	loadDefaultErrorListeners: true,
+	loadMessageCommandListeners: true,
 	caseInsensitiveCommands: true,
 	typing: true,
 	i18n: {

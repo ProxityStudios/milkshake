@@ -20,6 +20,7 @@ config.ts
 # Ignore heapsnapshot and log files
 *.heapsnapshot
 *.log
+remake-me
 
 # Ignore npm lockfiles file
 package-lock.json

@@ -11,7 +11,6 @@ export { default as CacheService } from './services/Cache';
 
 // structures
 export { default as BaseClient } from './structures/BaseClient';
-export { default as BaseSlashCreator } from './structures/BaseSlashCreator';
 
 // entities
 export { default as AppGuildEntity } from './entities/app/Guild';

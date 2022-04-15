@@ -1,11 +1,9 @@
 import { container, SapphireClient } from '@sapphire/framework';
 import type { ClientOptions } from 'discord.js';
-import { join } from 'path';
 
 import { Config } from '../../config';
 import { Utils, DatabaseService, CacheService } from '..';
 import { ServiceRegistry } from '../types';
-import BaseSlashCreator from './BaseSlashCreator';
 
 export default class BaseClient extends SapphireClient {
 	readonly config: typeof container.config = Config;
@@ -16,11 +14,6 @@ export default class BaseClient extends SapphireClient {
 
 	// add to <container.store> registry
 	readonly services: typeof container.services = new ServiceRegistry();
-	readonly slashCreator: BaseSlashCreator = new BaseSlashCreator(this, {
-		applicationID: this.utils.envParseString('DISCORD_APP_ID'),
-		publicKey: this.utils.envParseString('DISCORD_APP_PUBLIC_KEY'),
-		token: this.utils.envParseString('DISCORD_APP_TOKEN')
-	});
 
 	constructor(options: ClientOptions) {
 		super(options);
@@ -28,7 +21,6 @@ export default class BaseClient extends SapphireClient {
 		container.config = this.config;
 		container.services = this.services;
 		container.utils = this.utils;
-		container.slashCreator = this.slashCreator;
 	}
 
 	async run(): Promise<void> {
@@ -44,19 +36,7 @@ export default class BaseClient extends SapphireClient {
 		await this.login();
 		this.logger.info(this.colorette.green('Connected to discord.'));
 
-		this.slashCreator.withClient();
-
-		this.logger.info(this.colorette.gray('SlashCreator: Registering interaction commands...'));
-
-		// add to <container.store>
-		this.slashCreator.registerCommandsInAndSync(join(__dirname, '..', '..', 'interactions'));
-		this.logger.info(
-			this.colorette.green('SlashCreator: Interactions:'),
-			this.slashCreator.commands.map((c) => c.commandName)
-		);
-
 		if (this.config.dev) {
-			this.logger.debug(this.slashCreator.commands.map((c) => ({ name: c.commandName, path: c.filePath })));
 			this.logger.debug(this.services.get('cache').guilds);
 			this.logger.debug(this.services.get('cache').testers);
 		}

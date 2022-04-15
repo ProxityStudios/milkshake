@@ -1,15 +1,15 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Events, PreCommandRunPayload } from '@sapphire/framework';
+import { Events, PreMessageCommandRunPayload } from '@sapphire/framework';
 import { Listener } from '@sapphire/framework';
 import { replyLocalized } from '@sapphire/plugin-i18next';
 
 import { AppGuildEntity } from '../../lib';
 
 @ApplyOptions<Listener.Options>({
-	event: Events.PreCommandRun
+	event: Events.PreMessageCommandRun
 })
-export class CommandEvent extends Listener<typeof Events.PreCommandRun> {
-	async run({ message }: PreCommandRunPayload) {
+export class CommandEvent extends Listener<typeof Events.PreMessageCommandRun> {
+	async run({ message }: PreMessageCommandRunPayload) {
 		if (!message.guild) return;
 
 		const appDataManager = this.container.services.get('database').dataSources.app.manager;
