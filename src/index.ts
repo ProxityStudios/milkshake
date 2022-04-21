@@ -33,7 +33,7 @@ const main = async () => {
 		await client.login();
 		stopwatch.stop();
 
-		client.logger.info(`Client: Connected to discord. ${stopwatch.duration.toFixed(0)}ms`);
+		client.logger.info(`Client: Connected to discord. /${stopwatch.duration.toFixed(0)}ms/`);
 	} catch (error) {
 		client.logger.fatal(error);
 		client.destroy();
