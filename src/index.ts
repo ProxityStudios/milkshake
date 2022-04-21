@@ -1,6 +1,6 @@
 import './lib/setup';
 import { LogLevel, SapphireClient } from '@sapphire/framework';
-import {Stopwatch} from "@sapphire/stopwatch"
+import { Stopwatch } from '@sapphire/stopwatch';
 
 const client = new SapphireClient({
 	defaultPrefix: '?',
@@ -29,10 +29,10 @@ const main = async () => {
 
 		client.logger.info('Client: Connecting to discord.');
 
-		stopwatch.start()
+		stopwatch.start();
 		await client.login();
 		stopwatch.stop();
-		
+
 		client.logger.info(`Client: Connected to discord. ${stopwatch.duration.toFixed(0)}ms`);
 	} catch (error) {
 		client.logger.fatal(error);
