@@ -1,7 +1,0 @@
-{
-	"SET": {
-		"INVALID_ROLE": "You have provided an invalid role.",
-		"ALREADY_HAS_ROLE": "This user already has the role you provided.",
-		"SUCCESS": "**{{testerTag}}**'s tester roles have been setted to `{{testerRoles}}`."
-	}
-}
