@@ -2,5 +2,11 @@
   "name": "milkshake",
   "version": "3.0.0-alpha.1",
   "repository": "https://github.com/ProxityStudios/milkshake.git",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "release": "release-it"
+  },
+  "devDependencies": {
+    "release-it": "^14.14.2"
+  }
 }
