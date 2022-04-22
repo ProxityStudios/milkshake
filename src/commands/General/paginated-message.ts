@@ -3,7 +3,7 @@ import { PaginatedMessage } from '@sapphire/discord.js-utilities';
 import { Command, CommandOptions } from '@sapphire/framework';
 import type { Message } from 'discord.js';
 import { MessageEmbed } from 'discord.js';
-import { sendLoadingMessage } from '../../lib/utils';
+import { sendLoadingMessage } from '../../lib/util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['pm'],

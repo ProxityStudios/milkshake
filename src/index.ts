@@ -1,8 +1,9 @@
 import './lib/setup';
-import { LogLevel, SapphireClient } from '@sapphire/framework';
+import { LogLevel } from '@sapphire/framework';
 import { Stopwatch } from '@sapphire/stopwatch';
+import { MilkshakeClient } from './lib/structures/MilkshakeClient';
 
-const client = new SapphireClient({
+const client = new MilkshakeClient({
 	defaultPrefix: '?',
 	regexPrefix: /^(hey +)?milkshake[,! ]/i,
 	caseInsensitiveCommands: true,
@@ -27,13 +28,13 @@ const main = async () => {
 	try {
 		const stopwatch = new Stopwatch();
 
-		client.logger.info('Client: Connecting to discord.');
+		client.logger.info('Client: Starting...');
 
 		stopwatch.start();
-		await client.login();
+		await client.start();
 		stopwatch.stop();
 
-		client.logger.info(`Client: Connected to discord. /${stopwatch.duration.toFixed(0)}ms/`);
+		client.logger.info(`Client: Done. /${stopwatch.duration.toFixed(0)}ms/`);
 	} catch (error) {
 		client.logger.fatal(error);
 		client.destroy();

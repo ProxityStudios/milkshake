@@ -5,8 +5,6 @@ import { blue, gray, green, magenta, magentaBright, white, yellow } from 'colore
 const dev = process.env.NODE_ENV !== 'production';
 
 export class UserEvent extends Listener {
-	private readonly style = dev ? yellow : blue;
-
 	public constructor(context: PieceContext, options?: ListenerOptions) {
 		super(context, {
 			...options,
@@ -51,6 +49,6 @@ ${line03}${dev ? ` ${pad}${blc('<')}${llc('/')}${blc('>')} ${llc('DEVELOPMENT MO
 	}
 
 	private styleStore(store: Store<any>, last: boolean) {
-		return gray(`${last ? '└─' : '├─'} Loaded ${this.style(store.size.toString().padEnd(3, ' '))} ${store.name}.`);
+		return gray(`${last ? '└─' : '├─'} Loaded ${yellow(store.size.toString().padEnd(3, ' '))} ${store.name}.`);
 	}
 }
