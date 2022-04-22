@@ -1,18 +1,16 @@
-import type { ListenerOptions, PieceContext } from '@sapphire/framework';
+import { ApplyOptions } from '@sapphire/decorators';
+import { Events } from '@sapphire/framework';
 import { Listener, Store } from '@sapphire/framework';
 import { blue, gray, green, magenta, magentaBright, white, yellow } from 'colorette';
 
 const dev = process.env.NODE_ENV !== 'production';
 
-export class UserEvent extends Listener {
-	public constructor(context: PieceContext, options?: ListenerOptions) {
-		super(context, {
-			...options,
-			once: true
-		});
-	}
-
-	public run() {
+@ApplyOptions<Listener.Options>({
+	event: Events.ClientReady,
+	once: true
+})
+export class UserEvent extends Listener<typeof Events.ClientReady> {
+		public run() {
 		this.printBanner();
 		this.printStoreDebugInformation();
 	}
