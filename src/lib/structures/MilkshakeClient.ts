@@ -12,7 +12,7 @@ export class MilkshakeClient extends SapphireClient {
 		return response;
 	}
 
-	 destroy(): void {
+	destroy(): void {
 		return super.destroy();
 	}
 }

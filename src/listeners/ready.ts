@@ -10,7 +10,7 @@ const dev = process.env.NODE_ENV !== 'production';
 	once: true
 })
 export class UserEvent extends Listener<typeof Events.ClientReady> {
-		public run() {
+	public run() {
 		this.printBanner();
 		this.printStoreDebugInformation();
 	}

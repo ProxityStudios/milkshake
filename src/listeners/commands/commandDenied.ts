@@ -2,11 +2,9 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { CommandDeniedPayload, Events } from '@sapphire/framework';
 import { Listener, UserError } from '@sapphire/framework';
 
-@ApplyOptions<Listener.Options>(
-	{
-		event: Events.CommandDenied
-	}
-)
+@ApplyOptions<Listener.Options>({
+	event: Events.CommandDenied
+})
 export class UserEvent extends Listener<typeof Events.CommandDenied> {
 	public async run({ context, message: content }: UserError, { message }: CommandDeniedPayload) {
 		// `context: { silent: true }` should make UserError silent:
