@@ -7,12 +7,12 @@ export class MilkshakeClient extends SapphireClient {
 		container.client = this;
 	}
 
-	async start() {
+	async start(): Promise<string> {
 		const response = await super.login();
 		return response;
 	}
 
-	async destroy() {
+	 destroy(): void {
 		return super.destroy();
 	}
 }
