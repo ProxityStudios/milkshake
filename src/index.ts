@@ -7,6 +7,8 @@ const client = new MilkshakeClient({
 	defaultPrefix: '?',
 	regexPrefix: /^(hey +)?milkshake[,! ]/i,
 	caseInsensitiveCommands: true,
+	caseInsensitivePrefixes: true,
+	loadMessageCommandListeners: true,
 	logger: {
 		level: LogLevel.Debug
 	},

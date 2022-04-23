@@ -20,7 +20,7 @@
     "@sapphire/discord-utilities": "^2.6.0",
     "@sapphire/discord.js-utilities": "^4.4.0",
     "@sapphire/fetch": "^2.0.4",
-    "@sapphire/framework": "^2.3.0",
+    "@sapphire/framework": "^3.0.0-next.75c539d.0",
     "@sapphire/plugin-api": "^3.1.3",
     "@sapphire/plugin-editable-commands": "^1.1.3",
     "@sapphire/plugin-logger": "^2.1.2",
