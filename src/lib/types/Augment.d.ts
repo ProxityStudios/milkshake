@@ -1,8 +1,8 @@
-import type { IConfig } from "./Config";
+import type { IConfig } from './Config';
 
 declare module '@sapphire/pieces' {
 	interface Container {
-		config: IConfig
+		config: IConfig;
 	}
 }
 
@@ -14,6 +14,6 @@ declare module '@sapphire/framework' {
 
 declare module 'discord.js' {
 	interface Client {
-		config: IConfig
+		config: IConfig;
 	}
 }
