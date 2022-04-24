@@ -1,5 +1,9 @@
+import type { IConfig } from "./Config";
+
 declare module '@sapphire/pieces' {
-	interface Container {}
+	interface Container {
+		config: IConfig
+	}
 }
 
 declare module '@sapphire/framework' {
@@ -9,7 +13,7 @@ declare module '@sapphire/framework' {
 }
 
 declare module 'discord.js' {
-	interface Client {}
+	interface Client {
+		config: IConfig
+	}
 }
-
-export type Snowflake = `${bigint}`;

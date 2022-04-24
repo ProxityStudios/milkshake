@@ -2,6 +2,8 @@ import { SapphireClient, container } from '@sapphire/framework';
 import type { ClientOptions } from 'discord.js';
 
 export class MilkshakeClient extends SapphireClient {
+	config = container.config;
+
 	constructor(opts: ClientOptions) {
 		super(opts);
 		container.client = this;

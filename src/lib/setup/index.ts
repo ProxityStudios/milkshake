@@ -7,7 +7,10 @@ import { config } from 'dotenv-cra';
 import { join } from 'path';
 import { inspect } from 'util';
 import { srcDir } from '../util/constants';
+import { container } from '@sapphire/framework';
+import { Config } from '../../config';
 
+container.config = Config;
 config({ path: join(srcDir, '.env') });
 inspect.defaultOptions.depth = 1;
 colorette.createColors({ useColor: true });
