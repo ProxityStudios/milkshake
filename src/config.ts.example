@@ -1,0 +1,8 @@
+import type { IConfig } from "./lib/types/Config";
+
+export const Config: IConfig = {
+     mode: "development",
+     client: {
+          ownerIDs: ["934534496890535996"]
+     }
+};
