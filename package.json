@@ -3,7 +3,7 @@
   "version": "3",
   "main": "dist/index.js",
   "author": "Proxity Studios",
-  "license": "MIT",
+  "license": "Creative Commons Zero v1.0 Universal",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
