@@ -1,6 +1,6 @@
 {
   "name": "milkshake",
-  "version": "3",
+  "version": "3.4.2",
   "main": "dist/index.js",
   "author": "Proxity Studios",
   "license": "Creative Commons Zero v1.0 Universal",
