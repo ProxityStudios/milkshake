@@ -6,5 +6,5 @@ export class UserPrecondition extends Precondition {
 		return this.container.config.client.ownerIDs.includes(message.author.id)
 			? this.ok()
 			: this.error({ message: 'This command can only be used by the bot owner(s).' });
-        }
+	}
 }
