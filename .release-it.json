@@ -8,7 +8,7 @@
      },
      "hooks": {
           "before:init": ["yarn run format"],
-          "after:git:release": "Commits pushed to repository.",
-          "after:release": "Successfully released ${name} v${version} to ${repo.repository}."
+          "after:git:release": "echo Commits pushed to repository.",
+          "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
         }
 }
