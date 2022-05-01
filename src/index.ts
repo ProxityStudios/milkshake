@@ -2,15 +2,16 @@ import './lib/setup';
 import { LogLevel } from '@sapphire/framework';
 import { Stopwatch } from '@sapphire/stopwatch';
 import { MilkshakeClient } from './lib/structures/MilkshakeClient';
+import { Config } from './config';
 
 const client = new MilkshakeClient({
-	defaultPrefix: '?',
-	regexPrefix: /^(hey +)?milkshake[,! ]/i,
+	defaultPrefix: Config.client.defaultPrefix,
+	regexPrefix: Config.client.regexPrefix,
 	caseInsensitiveCommands: true,
 	caseInsensitivePrefixes: true,
 	loadMessageCommandListeners: true,
 	logger: {
-		level: LogLevel.Debug
+		level: Config.mode === 'development' ? LogLevel.Debug : LogLevel.Info
 	},
 	shards: 'auto',
 	intents: [
